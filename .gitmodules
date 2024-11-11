@@ -1,0 +1,3 @@
+[submodule "musicfmgit"]
+	path = musicfmgit
+	url = https://github.com/minzwon/musicfm.git
