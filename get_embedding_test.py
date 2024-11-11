@@ -10,7 +10,7 @@ from musicfm.model.musicfm_25hz import MusicFM25Hz
 
 # load MusicFM
 musicfm = MusicFM25Hz(
-    is_flash=False,
+    is_flash=True,
     stat_path=os.path.join(HOME_PATH, "musicfm", "data", "msd_stats.json"),
     model_path=os.path.join(HOME_PATH, "musicfm", "data", "pretrained_msd.pt"),
 )
