@@ -1,0 +1,46 @@
+hydra:
+  run:
+    dir: .
+
+# TODO(minigb): refine this
+data:
+  _dir: . # TODO(minigb): change this to kpop-dataset
+  audio_dir: ${data._dir}/audio
+  recordings_dir: ${data._dir}/recordings_per_artist
+  artists_dir: ${data._dir}/artists_per_label
+
+  _removed_suffix: removed
+  removed_audio_dir: ${data.audio_dir}_${data._removed_suffix}
+  removed_recordings_dir: ${data.recordings_dir}_${data._removed_suffix}
+  removed_artists_dir: ${data.artists_dir}_${data._removed_suffix}
+
+kkbox:
+  _dir: dataset/kkbox
+  members_csv_fn: ${kkbox._dir}/members.csv
+  sample_submission_csv_fn: ${kkbox._dir}/sample_submission.csv
+  song_extra_info_csv_fn: ${kkbox._dir}/song_extra_info.csv
+  songs_csv_fn: ${kkbox._dir}/songs.csv
+  songs_merged_csv_fn: ${kkbox._dir}/songs_merged.csv
+  test_csv_fn: ${kkbox._dir}/test.csv
+  train_csv_fn: ${kkbox._dir}/train.csv
+
+
+# TODO(minigb): refine this
+crawling:
+  _dir: dataset_crawling
+
+  song_list_csv_fn: ${kkbox.songs_merged_csv_fn}
+  save_csv_prefix: ${crawling._dir}/csv/audio
+  save_csv_fns:
+    chosen: ${crawling.save_csv_prefix}_chosen.csv
+    failed: ${crawling.save_csv_prefix}_failed.csv
+    queries: ${crawling.save_csv_prefix}_queries.csv
+
+
+pt_dir: pt
+
+exclude_keywords:
+  _dir: dataset_crawling/excluding_keywords
+  video_title_fn: ${exclude_keywords._dir}/video_title.json
+  song_title_fn: ${exclude_keywords._dir}/song_title.json
+  song_info_fn: ${exclude_keywords._dir}/song_info.json

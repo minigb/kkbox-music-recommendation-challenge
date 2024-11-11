@@ -1,0 +1,16 @@
+column_name:
+  artist: artists # TODO(minigb): Change this to singular form 'artist'
+  label: label
+  date: release_date
+  label_start: label_start_date
+  label_end: label_end_date
+  is_major_label: is_major_label
+
+# TODO(minigb): This is duplicated. Remove this
+csv_column_names:
+  song:
+    title: name
+    artist: artist_name
+  video:
+    title: Song
+    artist: Artist

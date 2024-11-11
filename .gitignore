@@ -1,1 +1,10 @@
+audio
+dataset/kkbox
+
 venv
+.hydra
+
+*__pycache__/
+.vscode/
+.DS_Store
+*.log

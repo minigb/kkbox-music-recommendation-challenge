@@ -1,0 +1,12 @@
+defaults:
+  - file
+  - audio_crawler_args
+  - column_name
+  - dict_key
+  - train
+  - wandb_setting
+  - _self_
+
+hydra:
+  run:
+    dir: .
