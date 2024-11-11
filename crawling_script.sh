@@ -7,7 +7,7 @@ dir_name="dataset_crawling"
 
 # List of Python scripts to run
 scripts=(
-    "refine_given_dataset.py"
+    # "refine_given_dataset.py"
     "crawling_data.py"
 )
 
