@@ -11,6 +11,7 @@ from pathlib import Path
 import logging
 import json
 import hydra
+from datetime import datetime
 
 from utils.song_id import get_song_id
 # from dataset_cleanup import AudioDownloadCleaner
@@ -83,27 +84,35 @@ class MusicCrawler:
     # remove rows that are not in input df, or do not have corresponding audio files
     input_df = self._get_df_with_unique_songs()
 
+    def _no_audio_file(song_id):
+      return not Path(f"{self.save_audio_dir}/{song_id}.mp3").exists()
+    def _not_in_input_df(title, artist):
+      return input_df[(input_df[self.in_csv_col_names.title] == title) & (input_df[self.in_csv_col_names.artist] == artist)].empty
+    def _not_okay_with_keyword(video_title):
+      return not (all(keyword.lower() not in video_title for keyword in self.exclude_keywords) \
+        and all(keyword.lower() in video_title for keyword in self.include_keywords))
+
     idx_to_remove = []
     for idx, row in chosen_df.iterrows():
       title = row[self.out_csv_col_names.title]
       artist = row[self.out_csv_col_names.artist]
+      if pd.isna(title) or pd.isna(artist):
+        idx_to_remove.append(idx)
+        continue
+
       song_id = get_song_id(title, artist)
       mp3_fn = Path(f"{self.save_audio_dir}/{song_id}.mp3")
-
-      # remove rows that does not have audio file
-      if not mp3_fn.exists():
-        idx_to_remove.append(idx)
-      # remove rows that are not in input df
-      elif input_df[(input_df[self.in_csv_col_names.title] == title) & (input_df[self.in_csv_col_names.artist] == artist)].empty:
+      if _no_audio_file(song_id) or _not_in_input_df(title, artist) or _not_okay_with_keyword(row['video_title']):
         idx_to_remove.append(idx)
         if mp3_fn.exists():
           mp3_fn.rename(self.removed_audio_dir / Path(f'{song_id}.mp3'))
-      elif not self._is_okay_with_keyword(row['video_title'], self.exclude_keywords, self.include_keywords):
-        idx_to_remove.append(idx)
-        # TODO(minigb): This is duplicated. Refactor this
-        if mp3_fn.exists():
-          mp3_fn.rename(self.removed_audio_dir / Path(f'{song_id}.mp3'))
 
+    # Save chosen_df with the suffix of archive_{date and time}
+    archive_suffix = datetime.now().strftime("archive_%Y%m%d_%H%M%S")
+    archive_path = Path(self.save_csv_fns.chosen).with_name(f"{Path(self.save_csv_fns.chosen).stem}_{archive_suffix}.csv")
+    chosen_df.to_csv(archive_path, index=False)
+
+    # Save new chosen_df
     chosen_df = chosen_df.drop(index=idx_to_remove)
     chosen_df.to_csv(self.save_csv_fns.chosen, index=False)
     
@@ -114,8 +123,9 @@ class MusicCrawler:
     assert Path(self.input_csv_path).exists(), f"{self.input_csv_path} does not exist"
     df = pd.read_csv(self.input_csv_path)
 
-    # Sort by artist
-    df_sorted = df.sort_values(by=self.in_csv_col_names.artist).reset_index(drop=True)
+    # # Sort by artist
+    # df_sorted = df.sort_values(by=self.in_csv_col_names.artist).reset_index(drop=True)
+    df_sorted = df
 
     # Remove duplicates
     df_uniq = df_sorted.drop_duplicates(subset=[self.in_csv_col_names.title, self.in_csv_col_names.artist], keep='first')
@@ -222,7 +232,7 @@ class MusicCrawler:
       'postprocessors': [{
         'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
-        'preferredquality': '192',
+        'preferredquality': '96',
       }],
       'postprocessor_args': [
           '-ss', '30',
@@ -370,7 +380,7 @@ class AdditionalMusicCrawler(MusicCrawler):
  
     self._init_save_csv_files()
     self.target_df = self._remove_existing_songs_from_the_input_df()
-    print(f"Number of failed songs to additionally crawl: {len(self.target_df)}")
+    print(f"Number of songs to additionally crawl: {len(self.target_df)}")
 
 
 # TODO(minigb): Implement this

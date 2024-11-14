@@ -21,6 +21,7 @@ kkbox:
   song_extra_info_csv_fn: ${kkbox._dir}/song_extra_info.csv
   songs_csv_fn: ${kkbox._dir}/songs.csv
   songs_merged_csv_fn: ${kkbox._dir}/songs_merged.csv
+  songs_to_crawl_csv_fn: ${kkbox._dir}/songs_to_crawl.csv
   test_csv_fn: ${kkbox._dir}/test.csv
   train_csv_fn: ${kkbox._dir}/train.csv
 
@@ -29,7 +30,7 @@ kkbox:
 crawling:
   _dir: dataset_crawling
 
-  song_list_csv_fn: ${kkbox.songs_merged_csv_fn}
+  song_list_csv_fn: ${kkbox.songs_to_crawl_csv_fn}
   save_csv_prefix: ${crawling._dir}/csv/audio
   save_csv_fns:
     chosen: ${crawling.save_csv_prefix}_chosen.csv
