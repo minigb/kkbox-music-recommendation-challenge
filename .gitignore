@@ -1,5 +1,6 @@
 audio
 dataset/kkbox
+dataset_crawling/csv
 
 venv
 .hydra

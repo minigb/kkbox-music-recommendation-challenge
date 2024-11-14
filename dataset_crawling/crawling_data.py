@@ -149,9 +149,12 @@ class MusicCrawler:
       video_channel = video.get('channel') # In case of None, don't change into lower case
       video_duration = video.get('duration')
       video_url = video.get('url')
+
+      if (video_title is None or video_channel is None or video_duration is None or video_url is None):
+        continue
       
       # Check if video is valid
-      if not (video_channel is not None and 60 <= video_duration <= 600):
+      if not (60 <= video_duration <= 600):
         continue
       # Check if any exclude_keywords not in song_title are in video_title)
       if not self._is_okay_with_keyword(video_title, exclude_keywords, include_keywords):
@@ -187,9 +190,10 @@ class MusicCrawler:
           return True
     
     is_satisfying = [
+      _is_topic,
+      _is_channel_artist_same,
       _is_official_audio,
-      _is_channel_artist_same or _is_topic,
-      _is_lyric_video,
+      # _is_lyric_video,
     ]
 
     chosen = None
@@ -218,8 +222,12 @@ class MusicCrawler:
       'postprocessors': [{
         'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
-        'preferredquality': '192'
-      }]
+        'preferredquality': '192',
+      }],
+      'postprocessor_args': [
+          '-ss', '30',
+          '-to', '61'
+      ]
     }
     with yt_dlp.YoutubeDL(download_opts) as ydl:
       ydl.download([chosen['video_url']])
@@ -455,8 +463,4 @@ def main(config):
   crawler.run(config.topk)
   
 if __name__ == '__main__':
-  try:
-    main()
-  except Exception as e:
-    print(e)
-    logging.error(e)
+  main()
