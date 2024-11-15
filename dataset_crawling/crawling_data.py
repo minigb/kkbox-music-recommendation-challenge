@@ -102,7 +102,8 @@ class MusicCrawler:
 
       song_id = get_song_id(title, artist)
       mp3_fn = Path(f"{self.save_audio_dir}/{song_id}.mp3")
-      if _no_audio_file(song_id) or _not_in_input_df(title, artist) or _not_okay_with_keyword(row['video_title']):
+      # if _no_audio_file(song_id) or _not_in_input_df(title, artist) or _not_okay_with_keyword(row['video_title']):
+      if _not_in_input_df(title, artist) or _not_okay_with_keyword(row['video_title']):
         idx_to_remove.append(idx)
         if mp3_fn.exists():
           mp3_fn.rename(self.removed_audio_dir / Path(f'{song_id}.mp3'))
@@ -121,11 +122,11 @@ class MusicCrawler:
 
   def _get_df_with_unique_songs(self) -> pd.DataFrame:
     assert Path(self.input_csv_path).exists(), f"{self.input_csv_path} does not exist"
-    df = pd.read_csv(self.input_csv_path)
+    df = pd.read_csv(self.input_csv_path)[5:10]
 
     # # Sort by artist
-    # df_sorted = df.sort_values(by=self.in_csv_col_names.artist).reset_index(drop=True)
-    df_sorted = df
+    df_sorted = df.sort_values(by=self.in_csv_col_names.artist).reset_index(drop=True)
+    # df_sorted = df
 
     # Remove duplicates
     df_uniq = df_sorted.drop_duplicates(subset=[self.in_csv_col_names.title, self.in_csv_col_names.artist], keep='first')
@@ -222,7 +223,7 @@ class MusicCrawler:
     return chosen, failed
 
 
-  def download_video(self, chosen, song_ID):
+  def download_audio(self, chosen, song_ID):
     print(f"Downloading {chosen['video_title']}...")
     song, artist = self._decode_song_identifier(song_ID)
     song_id = get_song_id(song, artist)
@@ -237,7 +238,10 @@ class MusicCrawler:
       'postprocessor_args': [
           '-ss', '30',
           '-to', '61'
-      ]
+      ],
+      # # OAuth login
+      # 'username': 'oauth',
+      # 'password': ''
     }
     with yt_dlp.YoutubeDL(download_opts) as ydl:
       ydl.download([chosen['video_url']])
@@ -251,7 +255,7 @@ class MusicCrawler:
     chosen, failed_update = self.filter_queries_and_choose(queries, failed)
     if chosen:
       try:
-        self.download_video(chosen, song_ID)
+        self.download_audio(chosen, song_ID)
         # If download is successful, return chosen
         return song_ID, queries, failed_update, chosen
       except Exception as e:

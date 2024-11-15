@@ -5,7 +5,7 @@ hydra:
 # TODO(minigb): refine this
 data:
   _dir: . # TODO(minigb): change this to kpop-dataset
-  audio_dir: ${data._dir}/audio
+  audio_dir: ${data._dir}/audio_additional
   recordings_dir: ${data._dir}/recordings_per_artist
   artists_dir: ${data._dir}/artists_per_label
 
