@@ -234,14 +234,7 @@ class MusicCrawler:
         'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
         'preferredquality': '96',
-      }],
-      'postprocessor_args': [
-          '-ss', '30',
-          '-to', '61'
-      ],
-      # # OAuth login
-      # 'username': 'oauth',
-      # 'password': ''
+      }]
     }
     with yt_dlp.YoutubeDL(download_opts) as ydl:
       ydl.download([chosen['video_url']])
@@ -453,7 +446,7 @@ def main(config):
   update_config(config)
 
   exclude_keywords_path = Path(config.exclude_keywords.video_title_fn)
-  with exclude_keywords_path.open('r') as f:
+  with exclude_keywords_path.open('r', encoding='utf-8') as f:
     exclude_keywords = json.load(f)
   
   if config.exclude_remaster:
