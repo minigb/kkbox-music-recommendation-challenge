@@ -19,11 +19,12 @@ kkbox:
   members_csv_fn: ${kkbox._dir}/members.csv
   sample_submission_csv_fn: ${kkbox._dir}/sample_submission.csv
   song_extra_info_csv_fn: ${kkbox._dir}/song_extra_info.csv
-  songs_csv_fn: ${kkbox._dir}/songs.csv
-  songs_merged_csv_fn: ${kkbox._dir}/songs_merged.csv
-  songs_to_crawl_csv_fn: ${kkbox._dir}/songs_to_crawl.csv
   test_csv_fn: ${kkbox._dir}/test.csv
   train_csv_fn: ${kkbox._dir}/train.csv
+
+  songs_csv_fn: dataset/songs.csv
+  songs_merged_csv_fn: dataset/songs_merged.csv
+  songs_to_crawl_csv_fn: dataset/songs_to_crawl.csv
 
 
 # TODO(minigb): refine this

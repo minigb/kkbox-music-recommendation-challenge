@@ -1,6 +1,9 @@
 audio*
 dataset/kkbox
 dataset_crawling/csv
+dataset/songs.csv
+dataset/songs_merged_and_sorted.csv
+dataset/songs_merged.csv
 
 venv
 .hydra
