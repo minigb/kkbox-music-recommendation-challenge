@@ -122,7 +122,7 @@ class MusicCrawler:
 
   def _get_df_with_unique_songs(self) -> pd.DataFrame:
     assert Path(self.input_csv_path).exists(), f"{self.input_csv_path} does not exist"
-    df = pd.read_csv(self.input_csv_path)[5:10]
+    df = pd.read_csv(self.input_csv_path)
 
     # # Sort by artist
     df_sorted = df.sort_values(by=self.in_csv_col_names.artist).reset_index(drop=True)
