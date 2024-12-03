@@ -10,10 +10,9 @@ from predict import load_model, predict, save_predictions
 
 def main(config):
     # Step 1: Feature Engineering
-    if config.do_preprocess or not Path(config.processed_data_path).exists():
-        user_df, item_df, interaction_df = load_data(config.dataset.members_path, config.dataset.songs_path, config.dataset.train_path)
-        processed_data, label_encoders, categorical_features = preprocess_data(user_df, item_df, interaction_df)
-        save_processed_data(processed_data, 'processed_data.csv')
+    user_df, item_df, interaction_df = load_data(config.dataset.members_path, config.dataset.songs_path, config.dataset.train_path)
+    processed_data, label_encoders, categorical_features = preprocess_data(user_df, item_df, interaction_df)
+    save_processed_data(processed_data, config.processed_data_path)
 
     # Step 2: Model Training
     data = load_processed_data(config.processed_data_path)
