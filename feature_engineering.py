@@ -17,9 +17,9 @@ def preprocess_data(user_df, item_df, interaction_df):
     Merge datasets and perform feature engineering.
     """
     # Merge user and interaction data on 'user_id'
-    data = interaction_df.merge(user_df, on='user_id', how='left')
+    data = interaction_df.merge(user_df, on='msno', how='left')
     # Merge item data on 'item_id'
-    data = data.merge(item_df, on='item_id', how='left')
+    data = data.merge(item_df, on='song_id', how='left')
 
     # Handle missing values if any
     data.fillna(-1, inplace=True)

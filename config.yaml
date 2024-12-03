@@ -1,0 +1,10 @@
+dataset:
+  _dir: 'dataset/kkbox'
+  members_path: ${dataset._dir}/members.csv
+  songs_path: ${dataset._dir}/../songs_merged.csv
+  train_path: ${dataset._dir}/train.csv
+  test_path: ${dataset._dir}/test.csv
+
+processed_data_path: 'processed_data.csv'
+
+do_preprocess: False

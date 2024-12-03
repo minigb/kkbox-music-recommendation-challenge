@@ -5,6 +5,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
 
+# TODO(minigb): Remove this. This makes code confusing.
 def load_data(data_path):
     """
     Load processed data from CSV file.
