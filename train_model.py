@@ -2,8 +2,9 @@
 
 import lightgbm as lgb
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import accuracy_score
 
 # TODO(minigb): Remove this. This makes code confusing.
 def load_data(data_path):
@@ -13,12 +14,18 @@ def load_data(data_path):
     data = pd.read_csv(data_path)
     return data
 
-def train_model(data, target_column, categorical_features):
+def train_model(data, target_column, categorical_features=None):
     """
     Train a LightGBM model.
     """
     X = data.drop(columns=[target_column])
     y = data[target_column]
+
+    # TODO(minigb): Seems this is unnecessary here
+    # # Determine if the problem is multiclass classification
+    # num_classes = len(np.unique(y))
+    # is_multiclass = num_classes > 2
+    # print(f"is multiclass: {is_multiclass}")
 
     # Split the data
     X_train, X_valid, y_train, y_valid = train_test_split(
@@ -26,34 +33,49 @@ def train_model(data, target_column, categorical_features):
     )
 
     # Create LightGBM datasets
-    lgb_train = lgb.Dataset(X_train, y_train, categorical_feature=categorical_features)
-    lgb_eval = lgb.Dataset(X_valid, y_valid, reference=lgb_train, categorical_feature=categorical_features)
+    train_data = lgb.Dataset(X_train, label=y_train, categorical_feature=categorical_features)
+    valid_data = lgb.Dataset(X_valid, label=y_valid, reference=train_data, categorical_feature=categorical_features)
 
     # Set parameters
     params = {
-        'objective': 'binary',
-        'metric': 'auc',
         'boosting_type': 'gbdt',
+        'objective': 'binary',
+        'metric': 'binary_logloss',
+        'num_class': 1,
+        'num_leaves': 31,
+        'learning_rate': 0.05,
+        'feature_fraction': 0.9,
         'verbose': -1,
         'seed': 42,
     }
 
+    # Define early stopping callback
+    callbacks = [lgb.early_stopping(stopping_rounds=10)]
+
     # Train the model
-    gbm = lgb.train(
+    model = lgb.train(
         params,
-        lgb_train,
-        num_boost_round=1000,
-        valid_sets=[lgb_train, lgb_eval],
-        early_stopping_rounds=50,
-        verbose_eval=100
+        train_data,
+        num_boost_round=100,
+        valid_sets=[train_data, valid_data],
+        callbacks=callbacks
     )
 
-    # Evaluate the model
-    y_pred = gbm.predict(X_valid, num_iteration=gbm.best_iteration)
-    auc = roc_auc_score(y_valid, y_pred)
-    print('Validation AUC:', auc)
+    # Make predictions
+    y_pred = model.predict(X_valid, num_iteration=model.best_iteration)
 
-    return gbm
+    # Evaluate the model
+    y_pred_classes = (y_pred > 0.5).astype(int)
+
+    accuracy = accuracy_score(y_valid, y_pred_classes)
+    print(f"Validation Accuracy: {accuracy * 100:.2f}%")
+
+    # Feature importance
+    print("Feature Importance:")
+    for feature, importance in zip(X.columns, model.feature_importance()):
+        print(f"{feature}: {importance}")
+
+    return model
 
 def save_model(model, model_path):
     """

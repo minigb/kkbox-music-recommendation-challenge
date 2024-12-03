@@ -21,4 +21,4 @@ def save_predictions(predictions, output_path):
     """
     Save the predictions to a CSV file.
     """
-    pd.DataFrame({'prediction': predictions}).to_csv(output_path, index=False)
+    pd.DataFrame({'target': predictions}).to_csv(output_path, index=False)
