@@ -2,7 +2,6 @@
 
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
-import re
 
 def load_data(user_data_path, item_data_path, interaction_data_path):
     """

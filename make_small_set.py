@@ -10,3 +10,7 @@ train_df.to_csv('dataset/kkbox/train_small.csv', index=False)
 songs_df = pd.read_csv('dataset/songs_merged.csv')
 songs_df = songs_df[songs_df['song_id'].isin(train_df['song_id'].unique())]
 songs_df.to_csv('dataset/songs_merged_small.csv', index=False)
+
+test_df = pd.read_csv('dataset/kkbox/test.csv')
+test_df = test_df[test_df['msno'].isin(memid_list)]
+test_df.to_csv('dataset/kkbox/test_small.csv', index=False)
