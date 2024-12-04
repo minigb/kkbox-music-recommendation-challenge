@@ -21,12 +21,6 @@ def train_model(data, target_column, categorical_features=None):
     X = data.drop(columns=[target_column])
     y = data[target_column]
 
-    # TODO(minigb): Seems this is unnecessary here
-    # # Determine if the problem is multiclass classification
-    # num_classes = len(np.unique(y))
-    # is_multiclass = num_classes > 2
-    # print(f"is multiclass: {is_multiclass}")
-
     # Split the data
     X_train, X_valid, y_train, y_valid = train_test_split(
         X, y, test_size=0.2, random_state=42
@@ -41,7 +35,6 @@ def train_model(data, target_column, categorical_features=None):
         'boosting_type': 'gbdt',
         'objective': 'binary',
         'metric': 'binary_logloss',
-        'num_class': 1,
         'num_leaves': 31,
         'learning_rate': 0.05,
         'feature_fraction': 0.9,
@@ -66,7 +59,6 @@ def train_model(data, target_column, categorical_features=None):
 
     # Evaluate the model
     y_pred_classes = (y_pred > 0.5).astype(int)
-
     accuracy = accuracy_score(y_valid, y_pred_classes)
     print(f"Validation Accuracy: {accuracy * 100:.2f}%")
 

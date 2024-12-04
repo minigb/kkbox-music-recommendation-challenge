@@ -2,8 +2,7 @@
 
 import lightgbm as lgb
 import pandas as pd
-
-from feature_engineering import clean_column_names
+from feature_engineering import merge_df
 
 def load_model(model_path):
     """
@@ -12,36 +11,20 @@ def load_model(model_path):
     model = lgb.Booster(model_file=model_path)
     return model
 
-def preprocess_test_data(test_df, label_encoders):
+def preprocess_test_data(user_df, item_df, interaction_df, encoder, categorical_features):
     """
     Preprocess the test data using the same steps as training data.
     """
-    # Clean column names
-    test_df = clean_column_names(test_df)
+    test_df = merge_df(user_df, item_df, interaction_df)
 
-    # Handle missing values
-    test_df.fillna(-1, inplace=True)
-
-    # Encode categorical features using saved label encoders
-    for col, le in label_encoders.items():
-        if col in test_df.columns:
-            test_df[col] = le.transform(test_df[col].astype(str))
-        else:
-            raise ValueError(f"Column '{col}' not found in test data.")
+    # Encode categorical features using the saved OrdinalEncoder
+    test_df[categorical_features] = encoder.transform(test_df[categorical_features].astype(str))
 
     return test_df
 
 def predict(model, data, id_column_name):
     """
     Generate predictions using the trained model and include test set IDs.
-
-    Parameters:
-    - model: Trained LightGBM model.
-    - data: DataFrame containing test features.
-    - id_column_name: String name of the ID column in the test data.
-
-    Returns:
-    - predictions_df: DataFrame containing IDs and their corresponding predictions.
     """
     # Ensure the ID column is present in the data
     if id_column_name not in data.columns:
@@ -57,14 +40,13 @@ def predict(model, data, id_column_name):
     # Create a DataFrame with IDs and predictions
     predictions_df = pd.DataFrame({
         id_column_name: ids,
-        'prediction': y_pred
+        'target': y_pred
     })
 
     return predictions_df
 
-
-def save_predictions(predictions, output_path):
+def save_predictions(predictions_df, output_path):
     """
     Save the predictions to a CSV file.
     """
-    pd.DataFrame({'target': predictions}).to_csv(output_path, index=False)
+    predictions_df.to_csv(output_path, index=False)
