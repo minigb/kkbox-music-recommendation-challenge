@@ -1,6 +1,7 @@
 dataset:
   _dir: 'dataset/kkbox'
-  small_suffix: '_small'
+  # small_suffix: '_small'
+  small_suffix: ''
   members_path: ${dataset._dir}/members${dataset.small_suffix}.csv
   songs_path: ${dataset._dir}/../songs_merged${dataset.small_suffix}.csv
   train_path: ${dataset._dir}/train.csv
