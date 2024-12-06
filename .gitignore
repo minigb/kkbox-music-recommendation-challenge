@@ -3,14 +3,10 @@ output
 
 .hydra
 wandb
+artifacts
 venv*
 
 *.log
 
 *.DS_Store
 __pycache__/
-
-# tmp
-*.pkl
-*.txt
-*.csv
