@@ -4,7 +4,7 @@ import lightgbm as lgb
 import pandas as pd
 from pathlib import Path
 
-from modules.feature_engineering import merge_df
+from modules.preprocessing import merge_df
 
 def load_model(model_path):
     """
