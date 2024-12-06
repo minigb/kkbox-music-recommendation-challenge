@@ -13,7 +13,7 @@ def main(config):
     submit_csv_path = Path(best_model_output_dir) / Path('submission.csv')
     assert submit_csv_path.exists(), f"submission.csv not found in {best_model_output_dir}"
 
-    os.system(f"kaggle competitions submit -c {config.kaggle.competition} -f {submit_csv_path} -m 'Best model: {date_from_output_dir}'")
+    os.system(f"kaggle competitions submit -c kkbox-music-recommendation-challenge -f {submit_csv_path} -m 'Best model: {date_from_output_dir}'")
 
 if __name__ == "__main__":
     main()
