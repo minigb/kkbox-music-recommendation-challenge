@@ -1,13 +1,12 @@
-import pickle
 from omegaconf import OmegaConf
 import pandas as pd
 import wandb
 import hydra
-from pathlib import Path
 
 from feature_engineering import load_data, preprocess_data, save_processed_data
 from train_model import train_model, save_model
 from predict import load_model, preprocess_test_data, predict as predict_fn, save_predictions
+from utils.pickle_util import *
 
 def train(config):
     # Step 1: Feature Engineering
@@ -21,10 +20,8 @@ def train(config):
     save_processed_data(processed_data, config.output.processed_data_path)
 
     # Save the encoder and categorical_features locally
-    with open(config.output.encoder_path, 'wb') as f:
-        pickle.dump(encoder, f)
-    with open(config.output.cat_features_path, 'wb') as f:
-        pickle.dump(categorical_features, f)
+    save_pkl(encoder, config.output.encoder_path)
+    save_pkl(categorical_features, config.output.cat_features_path)
 
     # Step 2: Model Training
     print('Step 2: Model Training')
@@ -34,10 +31,8 @@ def train(config):
 
 def run_inference(config):
     # Load data and model
-    with open(config.output.encoder_path, 'rb') as f:
-        encoder = pickle.load(f)
-    with open(config.output.cat_features_path, 'rb') as f:
-        categorical_features = pickle.load(f)
+    encoder = load_pkl(config.output.encoder_path)
+    categorical_features = load_pkl(config.output.cat_features_path)
     user_df = pd.read_csv(config.dataset.members_path)
     item_df = pd.read_csv(config.dataset.songs_path)
     model = load_model(config.output.model_path)
