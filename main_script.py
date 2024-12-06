@@ -64,7 +64,7 @@ def run_inference(config):
     # Save predictions locally
     save_predictions(predictions_df, config.output.submission_path)
     
-@hydra.main(config_path=".", config_name="config")
+@hydra.main(config_path=".", config_name="config", version_base=None)
 def main(config):
     train(config)
     run_inference(config)

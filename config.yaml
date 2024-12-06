@@ -2,11 +2,6 @@ hydra:
   run:
     dir: .
 
-wandb:
-  project: 'music-recommendation-system'
-  entity: 'minigb'
-  name: ${now:%Y-%m-%d_%H-%M-%S}
-
 dataset:
   dir: 'dataset/kkbox'
   # small_suffix: '_small'
@@ -18,7 +13,7 @@ dataset:
 
 output:
   main_dir: output
-  dir: ${output.main_dir}/${wandb.name}
+  dir: ${output.main_dir}/${now:%Y-%m-%d_%H-%M-%S}
   encoder_path: ${output.dir}/ordinal_encoder.pkl
   cat_features_path: ${output.dir}/categorical_features.pkl
   processed_data_path: ${output.dir}/processed_data.csv
