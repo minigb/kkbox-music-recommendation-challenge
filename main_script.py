@@ -1,17 +1,10 @@
-# main.py
-
 import pickle
 from omegaconf import OmegaConf
-from feature_engineering import load_data, preprocess_data, save_processed_data
-from train_model import train_model, save_model
-
-
-from omegaconf import OmegaConf
-import pickle
 import pandas as pd
 import wandb
-from datetime import datetime
 
+from feature_engineering import load_data, preprocess_data, save_processed_data
+from train_model import train_model, save_model
 from predict import load_model, preprocess_test_data, predict, save_predictions
 
 def train(config):
@@ -64,5 +57,7 @@ def predict(config):
 
 if __name__ == "__main__":
     config = OmegaConf.load('config.yaml')
+    wandb.init(project=config.wandb.project, entity=config.wandb.entity, name=config.wandb.name)
+    
     train(config)
     predict(config)
