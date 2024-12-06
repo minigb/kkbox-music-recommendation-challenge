@@ -2,12 +2,12 @@ from pathlib import Path
 import pandas as pd
 import hydra
 
-from modules.preprocessing import load_data, preprocess_data, save_processed_data
+from modules.preprocessing import load_data, encode_categorical_features, save_processed_data
 from modules.train_model import train_model, save_model
 from modules.predict import load_model, preprocess_test_data, predict as predict_fn, save_predictions
 from utils import *
 
-def save_best_model(model, auroc, config):
+def save_best_model(auroc, config):
     if not Path(config.best_model.json_path).exists():
         Path(config.best_model.json_path).parent.mkdir(parents=True, exist_ok=True)
         best_model = {
@@ -16,7 +16,7 @@ def save_best_model(model, auroc, config):
         }
     else:
         best_model = load_json(config.best_model.json_path)
-        if auroc > best_model['val_auroc']:
+        if auroc >= best_model['val_auroc']:
             best_model = {
                 'output_dir': config.output.dir,
                 'val_auroc': auroc
@@ -27,7 +27,7 @@ def train(config):
     # Step 1: Preprocessing
     print('Step 1: Preprocessing')
     user_df, item_df, interaction_df = load_data(config)
-    processed_data, encoder, categorical_features = preprocess_data(user_df, item_df, interaction_df)
+    processed_data, encoder, categorical_features = encode_categorical_features(user_df, item_df, interaction_df)
     save_processed_data(processed_data, config.output.processed_data_path)
 
     # Save the encoder and categorical_features locally
@@ -39,7 +39,7 @@ def train(config):
     data = processed_data
     model, val_auroc = train_model(data, target_column='target', categorical_features=categorical_features)
     save_model(model, config.output.model_path)
-    save_best_model(model, val_auroc, config)
+    save_best_model(val_auroc, config)
 
 def run_inference(config):
     # Load data and model

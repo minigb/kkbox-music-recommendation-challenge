@@ -4,6 +4,8 @@ import pandas as pd
 from sklearn.preprocessing import OrdinalEncoder
 from pathlib import Path
 
+from modules.feature_engineering import FeatureEngineering
+
 def merge_song_data(config):
     """
     Merge song information and song extra information datasets.
@@ -48,6 +50,15 @@ def preprocess_data(user_df, item_df, interaction_df):
     """
     data = merge_user_item_to_interaction_data(user_df, item_df, interaction_df)
 
+    # Perform feature engineering
+    feature_engineering = FeatureEngineering(data)
+    data = feature_engineering.run()
+
+    return data
+
+def encode_categorical_features(user_df, item_df, interaction_df):
+    data = preprocess_data(user_df, item_df, interaction_df)
+    
     # Identify categorical features before encoding
     categorical_features = data.select_dtypes(include=['object']).columns.tolist()
     

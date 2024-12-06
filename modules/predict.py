@@ -4,7 +4,7 @@ import lightgbm as lgb
 import pandas as pd
 from pathlib import Path
 
-from modules.preprocessing import merge_user_item_to_interaction_data
+from modules.preprocessing import preprocess_data
 
 def load_model(model_path):
     """
@@ -17,7 +17,7 @@ def preprocess_test_data(user_df, item_df, interaction_df, encoder, categorical_
     """
     Preprocess the test data using the same steps as training data.
     """
-    test_df = merge_user_item_to_interaction_data(user_df, item_df, interaction_df)
+    test_df = preprocess_data(user_df, item_df, interaction_df)
 
     # Encode categorical features using the saved OrdinalEncoder
     test_df[categorical_features] = encoder.transform(test_df[categorical_features].astype(str))
