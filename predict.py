@@ -2,6 +2,8 @@
 
 import lightgbm as lgb
 import pandas as pd
+from pathlib import Path
+
 from feature_engineering import merge_df
 
 def load_model(model_path):
@@ -45,8 +47,10 @@ def predict(model, data, id_column_name):
 
     return predictions_df
 
+# TODO(minigb): Saver functions are redundant. Clean these.
 def save_predictions(predictions_df, output_path):
     """
     Save the predictions to a CSV file.
     """
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     predictions_df.to_csv(output_path, index=False)

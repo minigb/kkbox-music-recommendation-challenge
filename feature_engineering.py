@@ -2,6 +2,7 @@
 
 import pandas as pd
 from sklearn.preprocessing import OrdinalEncoder
+from pathlib import Path
 
 def load_data(user_data_path, item_data_path, interaction_data_path):
     """
@@ -52,4 +53,5 @@ def save_processed_data(data, output_path):
     """
     Save the processed data to a CSV file.
     """
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     data.to_csv(output_path, index=False)

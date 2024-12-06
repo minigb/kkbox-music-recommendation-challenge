@@ -1,6 +1,11 @@
 dataset
+output
 
+.hydra
+wandb
 venv*
+
+*.log
 
 *.DS_Store
 __pycache__/
