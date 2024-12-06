@@ -4,7 +4,7 @@ import lightgbm as lgb
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import roc_auc_score
 
 # TODO(minigb): Remove this. This makes code confusing.
 def load_data(data_path):
@@ -54,20 +54,14 @@ def train_model(data, target_column, categorical_features=None):
         callbacks=callbacks
     )
 
+    # Validate the model
     # Make predictions
     y_pred = model.predict(X_valid, num_iteration=model.best_iteration)
 
-    # Evaluate the model
-    y_pred_classes = (y_pred > 0.5).astype(int)
-    accuracy = accuracy_score(y_valid, y_pred_classes)
-    print(f"Validation Accuracy: {accuracy * 100:.2f}%")
+    # Evaluate the model using AUROC
+    auroc = roc_auc_score(y_valid, y_pred)
 
-    # Feature importance
-    print("Feature Importance:")
-    for feature, importance in zip(X.columns, model.feature_importance()):
-        print(f"{feature}: {importance}")
-
-    return model
+    return model, auroc
 
 def save_model(model, model_path):
     """

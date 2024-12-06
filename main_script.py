@@ -1,4 +1,5 @@
 from omegaconf import OmegaConf
+from pathlib import Path
 import pandas as pd
 import wandb
 import hydra
@@ -6,7 +7,23 @@ import hydra
 from feature_engineering import load_data, preprocess_data, save_processed_data
 from train_model import train_model, save_model
 from predict import load_model, preprocess_test_data, predict as predict_fn, save_predictions
-from utils.pickle_util import *
+from utils import *
+
+def save_best_model(model, auroc, config):
+    if not Path(config.best_model.json_path).exists():
+        Path(config.best_model.json_path).parent.mkdir(parents=True, exist_ok=True)
+        best_model = {
+            'output_dir': config.output.dir,
+            'auroc': auroc
+        }
+    else:
+        best_model = load_json(config.best_model.json_path)
+        if auroc > best_model['auroc']:
+            best_model = {
+                'output_dir': config.output.dir,
+                'auroc': auroc
+            }
+    save_json(best_model, config.best_model.json_path)
 
 def train(config):
     # Step 1: Feature Engineering
@@ -26,8 +43,9 @@ def train(config):
     # Step 2: Model Training
     print('Step 2: Model Training')
     data = processed_data
-    model = train_model(data, target_column='target', categorical_features=categorical_features)
+    model, val_auroc = train_model(data, target_column='target', categorical_features=categorical_features)
     save_model(model, config.output.model_path)
+    save_best_model(model, val_auroc, config)
 
 def run_inference(config):
     # Load data and model
@@ -66,10 +84,7 @@ def wandb_log_data(config, aliases=['latest']):
 def main(config):
     wandb.init(project=config.wandb.project, entity=config.wandb.entity, name=config.wandb.name)
 
-    # Train and log artifacts
     train(config)
-
-    # Predict using artifacts from wandb
     run_inference(config)
 
     # Log the data

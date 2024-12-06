@@ -8,18 +8,22 @@ wandb:
   name: ${now:%Y-%m-%d_%H-%M-%S}
 
 dataset:
-  _dir: 'dataset/kkbox'
+  dir: 'dataset/kkbox'
   small_suffix: '_small'
-  members_path: ${dataset._dir}/members${dataset.small_suffix}.csv
-  songs_path: ${dataset._dir}/../songs_merged${dataset.small_suffix}.csv
-  train_path: ${dataset._dir}/train.csv
-  test_path: ${dataset._dir}/test${dataset.small_suffix}.csv
+  members_path: ${dataset.dir}/members${dataset.small_suffix}.csv
+  songs_path: ${dataset.dir}/../songs_merged${dataset.small_suffix}.csv
+  train_path: ${dataset.dir}/train.csv
+  test_path: ${dataset.dir}/test${dataset.small_suffix}.csv
 
 output:
-  _dir: 'output/'
-  encoder_path: ${output._dir}/ordinal_encoder.pkl
-  cat_features_path: ${output._dir}/categorical_features.pkl
-  processed_data_path: ${output._dir}/processed_data.csv
+  dir: output/${wandb.name}
+  encoder_path: ${output.dir}/ordinal_encoder.pkl
+  cat_features_path: ${output.dir}/categorical_features.pkl
+  processed_data_path: ${output.dir}/processed_data.csv
 
-  model_path: ${output._dir}/lightgbm_model.txt
-  submission_path: ${output._dir}/submission.csv
+  model_path: ${output.dir}/lightgbm_model.txt
+  submission_path: ${output.dir}/submission.csv
+
+best_model:
+  dir: ${output.dir}/best_model
+  json_path: ${best_model.dir}/best_model.json
