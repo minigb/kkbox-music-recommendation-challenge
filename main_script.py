@@ -8,20 +8,18 @@ from modules.predict import load_model, predict as predict_fn, save_predictions
 from utils import *
 
 def save_best_model(auroc, config):
-    if not Path(config.best_model.json_path).exists():
-        Path(config.best_model.json_path).parent.mkdir(parents=True, exist_ok=True)
+    best_auroc = 0
+    if Path(config.best_model.json_path).exists():
+        best_model = load_json(config.best_model.json_path)
+        best_auroc = best_model['val_auroc']
+
+    if auroc > best_auroc:
         best_model = {
             'output_dir': config.output.dir,
             'val_auroc': auroc
         }
-    else:
-        best_model = load_json(config.best_model.json_path)
-        if auroc >= best_model['val_auroc']:
-            best_model = {
-                'output_dir': config.output.dir,
-                'val_auroc': auroc
-            }
-    save_json(best_model, config.best_model.json_path)
+        Path(config.best_model.json_path).parent.mkdir(parents=True, exist_ok=True)
+        save_json(best_model, config.best_model.json_path)
 
 def train(config):
     # Step 1: Preprocessing
