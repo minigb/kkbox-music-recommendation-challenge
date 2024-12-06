@@ -24,13 +24,9 @@ def save_best_model(model, auroc, config):
     save_json(best_model, config.best_model.json_path)
 
 def train(config):
-    # Step 1: Feature Engineering
-    print('Step 1: Feature Engineering')
-    user_df, item_df, interaction_df = load_data(
-        config.dataset.members_path,
-        config.dataset.songs_path,
-        config.dataset.train_path
-    )
+    # Step 1: Preprocessing
+    print('Step 1: Preprocessing')
+    user_df, item_df, interaction_df = load_data(config)
     processed_data, encoder, categorical_features = preprocess_data(user_df, item_df, interaction_df)
     save_processed_data(processed_data, config.output.processed_data_path)
 

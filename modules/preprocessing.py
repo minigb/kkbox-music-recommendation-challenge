@@ -4,13 +4,25 @@ import pandas as pd
 from sklearn.preprocessing import OrdinalEncoder
 from pathlib import Path
 
-def load_data(user_data_path, item_data_path, interaction_data_path):
+def merge_song_data(config):
+    """
+    Merge song information and song extra information datasets.
+    """
+    if Path(config.dataset.songs_path).exists():
+        return
+    songs = pd.read_csv(config.dataset.songs_original_path)
+    songs_extra = pd.read_csv(config.dataset.songs_extra_original_path)
+    data = songs.merge(songs_extra, on='song_id', how='left')
+    data.to_csv(config.dataset.songs_path, index=False)
+
+def load_data(config):
     """
     Load user data, item data, and interaction data from CSV files.
     """
-    user_df = pd.read_csv(user_data_path)
-    item_df = pd.read_csv(item_data_path)
-    interaction_df = pd.read_csv(interaction_data_path)
+    merge_song_data(config)
+    user_df = pd.read_csv(config.dataset.members_path)
+    item_df = pd.read_csv(config.dataset.songs_path)
+    interaction_df = pd.read_csv(config.dataset.train_path)
     return user_df, item_df, interaction_df
 
 def clean_column_names(df):

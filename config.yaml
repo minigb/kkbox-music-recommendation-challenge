@@ -11,6 +11,9 @@ dataset:
   train_path: ${dataset.dir}/train.csv
   test_path: ${dataset.dir}/test${dataset.small_suffix}.csv
 
+  songs_original_path: ${dataset.dir}/songs${dataset.small_suffix}.csv
+  songs_extra_original_path: ${dataset.dir}/song_extra_info${dataset.small_suffix}.csv
+
 output:
   main_dir: output
   dir: ${output.main_dir}/${now:%Y-%m-%d_%H-%M-%S}
