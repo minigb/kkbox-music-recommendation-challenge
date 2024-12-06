@@ -13,16 +13,16 @@ def load_model(model_path):
     model = lgb.Booster(model_file=model_path)
     return model
 
-def preprocess_test_data(user_df, item_df, interaction_df, encoder, categorical_features):
-    """
-    Preprocess the test data using the same steps as training data.
-    """
-    test_df = preprocess_data(user_df, item_df, interaction_df)
+# def preprocess_test_data(config, encoder, categorical_features):
+#     """
+#     Preprocess the test data using the same steps as training data.
+#     """
+#     test_df = preprocess_data(config, is_train=False)
 
-    # Encode categorical features using the saved OrdinalEncoder
-    test_df[categorical_features] = encoder.transform(test_df[categorical_features].astype(str))
+#     # Encode categorical features using the saved OrdinalEncoder
+#     test_df[categorical_features] = encoder.transform(test_df[categorical_features].astype(str))
 
-    return test_df
+#     return test_df
 
 def predict(model, data, id_column_name):
     """

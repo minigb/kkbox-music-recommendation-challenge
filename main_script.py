@@ -2,9 +2,9 @@ from pathlib import Path
 import pandas as pd
 import hydra
 
-from modules.preprocessing import load_data, encode_categorical_features, save_processed_data
+from modules.preprocessing import preprocess_data, encode_categorical_features, save_processed_data
 from modules.train_model import train_model, save_model
-from modules.predict import load_model, preprocess_test_data, predict as predict_fn, save_predictions
+from modules.predict import load_model, predict as predict_fn, save_predictions
 from utils import *
 
 def save_best_model(auroc, config):
@@ -26,8 +26,7 @@ def save_best_model(auroc, config):
 def train(config):
     # Step 1: Preprocessing
     print('Step 1: Preprocessing')
-    user_df, item_df, interaction_df = load_data(config)
-    processed_data, encoder, categorical_features = encode_categorical_features(user_df, item_df, interaction_df)
+    processed_data, encoder, categorical_features = encode_categorical_features(config)
     save_processed_data(processed_data, config.output.processed_data_path)
 
     # Save the encoder and categorical_features locally
@@ -45,13 +44,11 @@ def run_inference(config):
     # Load data and model
     encoder = load_pkl(config.output.encoder_path)
     categorical_features = load_pkl(config.output.cat_features_path)
-    user_df = pd.read_csv(config.dataset.members_path)
-    item_df = pd.read_csv(config.dataset.songs_path)
     model = load_model(config.output.model_path)
 
-    # Preprocess the test data using the retrieved encoder and categorical features
-    test_df = pd.read_csv(config.dataset.test_path)
-    test_data = preprocess_test_data(user_df, item_df, test_df, encoder, categorical_features)
+    # Encode categorical features using the saved OrdinalEncoder
+    test_data = preprocess_data(config, is_train=False)
+    test_data[categorical_features] = encoder.transform(test_data[categorical_features].astype(str))
 
     # Make predictions
     # Ensure that 'id' column exists in your test_df

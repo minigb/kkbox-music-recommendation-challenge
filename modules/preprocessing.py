@@ -17,16 +17,6 @@ def merge_song_data(config):
     data = songs.merge(songs_extra, on='song_id', how='left')
     data.to_csv(config.dataset.songs_path, index=False)
 
-def load_data(config):
-    """
-    Load user data, item data, and interaction data from CSV files.
-    """
-    merge_song_data(config)
-    user_df = pd.read_csv(config.dataset.members_path)
-    item_df = pd.read_csv(config.dataset.songs_path)
-    interaction_df = pd.read_csv(config.dataset.train_path)
-    return user_df, item_df, interaction_df
-
 def clean_column_names(df):
     """
     Clean column names by replacing special characters with underscores.
@@ -44,20 +34,24 @@ def merge_user_item_to_interaction_data(user_df, item_df, interaction_df):
 
     return data
 
-def preprocess_data(user_df, item_df, interaction_df):
+def preprocess_data(config, is_train=True):
     """
     Merge datasets, clean column names, and perform feature engineering.
     """
+    merge_song_data(config)
+    user_df = pd.read_csv(config.dataset.members_path)
+    item_df = pd.read_csv(config.dataset.songs_path)
+    interaction_df = pd.read_csv(config.dataset.train_path) if is_train else pd.read_csv(config.dataset.test_path)
     data = merge_user_item_to_interaction_data(user_df, item_df, interaction_df)
 
     # Perform feature engineering
-    feature_engineering = FeatureEngineering(data)
+    feature_engineering = FeatureEngineering(data, config)
     data = feature_engineering.run()
 
     return data
 
-def encode_categorical_features(user_df, item_df, interaction_df):
-    data = preprocess_data(user_df, item_df, interaction_df)
+def encode_categorical_features(config):
+    data = preprocess_data(config)
     
     # Identify categorical features before encoding
     categorical_features = data.select_dtypes(include=['object']).columns.tolist()

@@ -28,4 +28,8 @@ best_model:
   json_path: ${output.main_dir}/best_model.json
 
 feature_engineering:
+  refine_composer: True
+  refine_genre_id: True
+  
   max_composers: 10
+  max_genre_ids: 8
