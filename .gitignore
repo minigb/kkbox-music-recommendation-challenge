@@ -2,8 +2,6 @@ dataset
 output
 
 .hydra
-wandb
-artifacts
 venv*
 
 *.log

@@ -9,14 +9,16 @@ wandb:
 
 dataset:
   dir: 'dataset/kkbox'
-  small_suffix: '_small'
+  # small_suffix: '_small'
+  small_suffix: ''
   members_path: ${dataset.dir}/members${dataset.small_suffix}.csv
   songs_path: ${dataset.dir}/../songs_merged${dataset.small_suffix}.csv
   train_path: ${dataset.dir}/train.csv
   test_path: ${dataset.dir}/test${dataset.small_suffix}.csv
 
 output:
-  dir: output/${wandb.name}
+  main_dir: output
+  dir: ${output.main_dir}/${wandb.name}
   encoder_path: ${output.dir}/ordinal_encoder.pkl
   cat_features_path: ${output.dir}/categorical_features.pkl
   processed_data_path: ${output.dir}/processed_data.csv
@@ -25,5 +27,5 @@ output:
   submission_path: ${output.dir}/submission.csv
 
 best_model:
-  dir: ${output.dir}/best_model
+  dir: ${output.main_dir}/best_model
   json_path: ${best_model.dir}/best_model.json
