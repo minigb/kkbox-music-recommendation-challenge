@@ -25,7 +25,7 @@ def train(config):
     # Step 1: Preprocessing
     print('Step 1: Preprocessing')
     processed_data, encoder, categorical_features = encode_categorical_features(config)
-    save_processed_data(processed_data, config.output.processed_data_path)
+    # save_processed_data(processed_data, config.output.processed_data_path)
 
     # Save the encoder and categorical_features locally
     save_pkl(encoder, config.output.encoder_path)
