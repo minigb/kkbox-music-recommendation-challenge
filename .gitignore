@@ -4,3 +4,8 @@ venv*
 
 *.DS_Store
 __pycache__/
+
+# tmp
+*.pkl
+*.txt
+*.csv
