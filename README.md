@@ -2,4 +2,4 @@
 do 'pip install -r requirements.txt'
 
 # Run
-./run.sh
+python main_script.py
