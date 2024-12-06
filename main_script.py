@@ -2,9 +2,9 @@ from pathlib import Path
 import pandas as pd
 import hydra
 
-from feature_engineering import load_data, preprocess_data, save_processed_data
-from train_model import train_model, save_model
-from predict import load_model, preprocess_test_data, predict as predict_fn, save_predictions
+from modules.feature_engineering import load_data, preprocess_data, save_processed_data
+from modules.train_model import train_model, save_model
+from modules.predict import load_model, preprocess_test_data, predict as predict_fn, save_predictions
 from utils import *
 
 def save_best_model(model, auroc, config):
