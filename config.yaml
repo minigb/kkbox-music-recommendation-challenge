@@ -26,3 +26,6 @@ output:
 
 best_model:
   json_path: ${output.main_dir}/best_model.json
+
+feature_engineering:
+  max_composers: 10
