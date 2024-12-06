@@ -20,7 +20,7 @@ def clean_column_names(df):
     df.columns = df.columns.str.replace(r'[^\w]', '_', regex=True)
     return df
 
-def merge_df(user_df, item_df, interaction_df):
+def merge_user_item_to_interaction_data(user_df, item_df, interaction_df):
     """
     Merge datasets on 'msno' and 'song_id'.
     """
@@ -34,7 +34,7 @@ def preprocess_data(user_df, item_df, interaction_df):
     """
     Merge datasets, clean column names, and perform feature engineering.
     """
-    data = merge_df(user_df, item_df, interaction_df)
+    data = merge_user_item_to_interaction_data(user_df, item_df, interaction_df)
 
     # Identify categorical features before encoding
     categorical_features = data.select_dtypes(include=['object']).columns.tolist()
