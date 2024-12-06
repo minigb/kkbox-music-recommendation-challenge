@@ -12,14 +12,14 @@ def save_best_model(model, auroc, config):
         Path(config.best_model.json_path).parent.mkdir(parents=True, exist_ok=True)
         best_model = {
             'output_dir': config.output.dir,
-            'auroc': auroc
+            'val_auroc': auroc
         }
     else:
         best_model = load_json(config.best_model.json_path)
-        if auroc > best_model['auroc']:
+        if auroc > best_model['val_auroc']:
             best_model = {
                 'output_dir': config.output.dir,
-                'auroc': auroc
+                'val_auroc': auroc
             }
     save_json(best_model, config.best_model.json_path)
 

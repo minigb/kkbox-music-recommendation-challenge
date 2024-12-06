@@ -22,5 +22,4 @@ output:
   submission_path: ${output.dir}/submission.csv
 
 best_model:
-  dir: ${output.main_dir}/best_model
-  json_path: ${best_model.dir}/best_model.json
+  json_path: ${output.main_dir}/best_model.json
