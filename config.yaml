@@ -34,10 +34,10 @@ best_model:
   json_path: ${output.main_dir}/best_model.json
 
 feature_engineering:
-  refine_composer: True
-  refine_lyricist: True
-  refine_genre_id: True
-  get_member_register_duration: False
+  composer: True
+  lyricist: True
+  genre_id: True
+  register_duration: False
   
   max_composers: 10
   max_lyricist: 10

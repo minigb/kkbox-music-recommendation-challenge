@@ -76,6 +76,9 @@ def wandb_log_data(config, aliases=['latest']):
     
 @hydra.main(config_path=".", config_name="config", version_base=None)
 def main(config):
+    enabled_features = [key for key, value in config.feature_engineering.items() if value]
+    config.wandb.name = f"{config.wandb.name} - {'&'.join(enabled_features)}"
+
     wandb.init(project=config.wandb.project, entity=config.wandb.entity, name=config.wandb.name)
     train(config)
     run_inference(config)
