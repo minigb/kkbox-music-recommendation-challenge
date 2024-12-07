@@ -1,7 +1,10 @@
+import itertools
+from copy import deepcopy
 from pathlib import Path
 from omegaconf import OmegaConf
 import hydra
 import wandb
+from tqdm import tqdm
 
 from modules.preprocessing import preprocess_data, encode_categorical_features, save_processed_data
 from modules.train_model import train_model, save_model
@@ -76,14 +79,37 @@ def wandb_log_data(config, aliases=['latest']):
     
 @hydra.main(config_path=".", config_name="config", version_base=None)
 def main(config):
-    enabled_features = [key for key, value in config.feature_engineering.items() if not key.startswith('const') and value]
-    config.wandb.name = f"{config.wandb.name}_{','.join(enabled_features)}"
+    feature_keys = [key for key in config.feature_engineering if not key.startswith('const')]
+    feature_combinations = list(itertools.product([True, False], repeat=len(feature_keys)))
 
-    wandb.init(project=config.wandb.project, entity=config.wandb.entity, name=config.wandb.name)
-    train(config)
-    run_inference(config)
-    wandb_log_data(config)
-    wandb.finish()
+    for combination in tqdm(feature_combinations):
+        # Create a deep copy of the config to modify for each combination
+        current_config = deepcopy(config)
+
+        # Update the feature_engineering section with the current combination
+        for key, value in zip(feature_keys, combination):
+            current_config.feature_engineering[key] = value
+
+        # Update the wandb run name to include the enabled features for this combination
+        enabled_features = [key for key, value in current_config.feature_engineering.items() if key in feature_keys and value]
+        features_string = ','.join(enabled_features) if len(enabled_features) > 0 else 'baseline'
+        for existing_out_files in Path(current_config.output.dir).glob('*'):
+            if features_string in existing_out_files.name:
+                continue
+
+        current_config.wandb.name = f"{features_string}_{current_config.wandb.name}"
+
+        # Initialize wandb and run the pipeline
+        wandb.init(project=current_config.wandb.project, entity=current_config.wandb.entity, name=current_config.wandb.name)
+        
+        # Call your pipeline functions
+        train(current_config)
+        run_inference(current_config)
+        wandb_log_data(current_config)
+
+        # Finish wandb run
+        wandb.finish()
+
 
 if __name__ == "__main__":
     main()

@@ -35,7 +35,7 @@ best_model:
 
 feature_engineering:
   composer: False
-  lyricist: False
+  lyricist: True
   genre_id: False
   register_duration: False
   
