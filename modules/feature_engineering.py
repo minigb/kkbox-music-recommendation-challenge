@@ -4,6 +4,11 @@ class FeatureEngineering:
     def __init__(self, data, config):
         self.data = data # interaction data
         self.config = config
+
+    def run(self):
+        self.refine_composer()
+        self.refine_genre_id()
+        return self.data
     
     def refine_composer(self):
         if not self.config.feature_engineering.refine_composer:
@@ -26,8 +31,3 @@ class FeatureEngineering:
         for i in range(max_num):
             self.data[f'genre_id_{i}'] = [elem[i] if len(elem) > i else None for elem in genre_ids]
         self.data.drop(columns=[column_name], inplace=True)
-
-    def run(self):
-        self.refine_composer()
-        self.refine_genre_id()
-        return self.data
