@@ -8,6 +8,7 @@ class FeatureEngineering:
     def run(self):
         self.refine_composer()
         self.refine_genre_id()
+        self.get_member_register_duration()
         return self.data
     
     def refine_composer(self):
@@ -31,3 +32,10 @@ class FeatureEngineering:
         for i in range(max_num):
             self.data[f'genre_id_{i}'] = [elem[i] if len(elem) > i else None for elem in genre_ids]
         self.data.drop(columns=[column_name], inplace=True)
+
+    def get_member_register_duration(self):
+        if not self.config.feature_engineering.get_member_register_duration:
+            return
+        self.data['registration_init_time'] = pd.to_datetime(self.data['registration_init_time'], format='%Y%m%d')
+        self.data['expiration_date'] = pd.to_datetime(self.data['expiration_date'], format='%Y%m%d')
+        self.data['member_duration'] = (self.data['expiration_date'] - self.data['registration_init_time']).dt.days

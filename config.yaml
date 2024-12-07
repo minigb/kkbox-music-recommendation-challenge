@@ -30,6 +30,7 @@ best_model:
 feature_engineering:
   refine_composer: True
   refine_genre_id: True
+  get_member_register_duration: True
   
   max_composers: 10
   max_genre_ids: 8
