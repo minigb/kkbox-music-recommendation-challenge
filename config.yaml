@@ -34,9 +34,9 @@ best_model:
   json_path: ${output.main_dir}/best_model.json
 
 feature_engineering:
-  composer: True
-  lyricist: True
-  genre_id: True
+  composer: False
+  lyricist: False
+  genre_id: False
   register_duration: False
   
   const_max_composers: 10

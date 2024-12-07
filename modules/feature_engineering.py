@@ -19,7 +19,7 @@ class FeatureEngineering:
         column_name = 'composer'
         composers_list = [sorted(str(composers).split('| ')) for composers in self.data[column_name].tolist()]
         # max_num = max([len(composers) for composers in composers_list])
-        max_num = self.config.feature_engineering.const_maxcomposers
+        max_num = self.config.feature_engineering.const_max_composers
         for i in range(max_num):
             self.data[f'{column_name}_{i}'] = [composers[i] if len(composers) > i else None for composers in composers_list]
         self.data.drop(columns=[column_name], inplace=True)
@@ -30,7 +30,7 @@ class FeatureEngineering:
         column_name = 'lyricist'
         composers_list = [sorted(str(composers).split('| ')) for composers in self.data[column_name].tolist()]
         # max_num = max([len(composers) for composers in composers_list])
-        max_num = self.config.feature_engineering.const_maxlyricist
+        max_num = self.config.feature_engineering.const_max_lyricist
         for i in range(max_num):
             self.data[f'{column_name}_{i}'] = [elem[i] if len(elem) > i else None for elem in composers_list]
         self.data.drop(columns=[column_name], inplace=True)
@@ -41,7 +41,7 @@ class FeatureEngineering:
         column_name = 'genre_ids'
         genre_ids = [sorted(str(elem).split('|')) for elem in self.data[column_name].tolist()]
         # max_num = max([len(composers) for composers in genre_ids])
-        max_num = self.config.feature_engineering.const_maxgenre_ids
+        max_num = self.config.feature_engineering.const_max_genre_ids
         for i in range(max_num):
             self.data[f'{column_name}_{i}'] = [elem[i] if len(elem) > i else None for elem in genre_ids]
         self.data.drop(columns=[column_name], inplace=True)
