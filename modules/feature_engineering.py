@@ -47,6 +47,6 @@ class FeatureEngineering:
     def get_member_register_duration(self):
         if not self.config.feature_engineering.get_member_register_duration:
             return
-        self.data['registration_init_time'] = pd.to_datetime(self.data['registration_init_time'], format='%Y%m%d')
-        self.data['expiration_date'] = pd.to_datetime(self.data['expiration_date'], format='%Y%m%d')
-        self.data['member_duration'] = (self.data['expiration_date'] - self.data['registration_init_time']).dt.days
+        exp_col_df = pd.to_datetime(self.data['registration_init_time'], format='%Y%m%d', errors='coerce')
+        reg_col_df = pd.to_datetime(self.data['expiration_date'], format='%Y%m%d', errors='coerce')
+        self.data['member_duration'] = (exp_col_df - reg_col_df).dt.days.astype(int)

@@ -66,10 +66,10 @@ def wandb_log_data(config, aliases=['latest']):
     model_artifact.add_file(config.output.model_path)
     wandb.log_artifact(model_artifact, aliases=aliases)
 
-    # predictions
-    inference_artifact = wandb.Artifact('inference_results', type='inference')
-    inference_artifact.add_file(config.output.submission_path)
-    wandb.log_artifact(inference_artifact, aliases=['latest'])
+    # # predictions
+    # inference_artifact = wandb.Artifact('inference_results', type='inference')
+    # inference_artifact.add_file(config.output.submission_path)
+    # wandb.log_artifact(inference_artifact, aliases=['latest'])
 
     # config details
     wandb.config.update(OmegaConf.to_container(config, resolve=True))   
