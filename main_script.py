@@ -1,6 +1,7 @@
 from pathlib import Path
-import pandas as pd
+from omegaconf import OmegaConf
 import hydra
+import wandb
 
 from modules.preprocessing import preprocess_data, encode_categorical_features, save_processed_data
 from modules.train_model import train_model, save_model
@@ -58,11 +59,28 @@ def run_inference(config):
 
     # Save predictions locally
     save_predictions(predictions_df, config.output.submission_path)
+
+def wandb_log_data(config, aliases=['latest']):
+    # model
+    model_artifact = wandb.Artifact('trained_model', type='model')
+    model_artifact.add_file(config.output.model_path)
+    wandb.log_artifact(model_artifact, aliases=aliases)
+
+    # predictions
+    inference_artifact = wandb.Artifact('inference_results', type='inference')
+    inference_artifact.add_file(config.output.submission_path)
+    wandb.log_artifact(inference_artifact, aliases=['latest'])
+
+    # config details
+    wandb.config.update(OmegaConf.to_container(config, resolve=True))   
     
 @hydra.main(config_path=".", config_name="config", version_base=None)
 def main(config):
+    wandb.init(project=config.wandb.project, entity=config.wandb.entity, name=config.wandb.name)
     train(config)
     run_inference(config)
+    wandb_log_data(config)
+    wandb.finish()
 
 if __name__ == "__main__":
     main()

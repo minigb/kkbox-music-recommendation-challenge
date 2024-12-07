@@ -2,6 +2,8 @@ dataset
 output/*
 !output/best_model.json
 
+wandb
+
 .hydra
 venv*
 
