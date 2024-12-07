@@ -21,6 +21,17 @@ class FeatureEngineering:
         for i in range(max_num):
             self.data[f'composer_{i}'] = [composers[i] if len(composers) > i else None for composers in composers_list]
         self.data.drop(columns=[column_name], inplace=True)
+    
+    def refine_lyricist(self):
+        if not self.config.feature_engineering.refine_lyricist:
+            return
+        column_name = 'lyricist'
+        composers_list = [sorted(str(composers).split('| ')) for composers in self.data[column_name].tolist()]
+        # max_num = max([len(composers) for composers in composers_list])
+        max_num = self.config.feature_engineering.max_lyricist
+        for i in range(max_num):
+            self.data[f'composer_{i}'] = [composers[i] if len(composers) > i else None for composers in composers_list]
+        self.data.drop(columns=[column_name], inplace=True)
 
     def refine_genre_id(self):
         if not self.config.feature_engineering.refine_genre_id:
