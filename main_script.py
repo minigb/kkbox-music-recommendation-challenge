@@ -21,6 +21,9 @@ def save_best_model(auroc, config):
         Path(config.best_model.json_path).parent.mkdir(parents=True, exist_ok=True)
         save_json(best_model, config.best_model.json_path)
 
+def save_auroc(auroc, auroc_path):
+    save_json({'val_auroc': auroc}, auroc_path)
+
 def train(config):
     # Step 1: Preprocessing
     print('Step 1: Preprocessing')
@@ -36,6 +39,7 @@ def train(config):
     data = processed_data
     model, val_auroc = train_model(data, target_column='target', categorical_features=categorical_features)
     save_model(model, config.output.model_path)
+    save_auroc(val_auroc, config.output.auroc_path)
     save_best_model(val_auroc, config)
 
 def run_inference(config):

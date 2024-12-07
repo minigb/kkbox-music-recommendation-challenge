@@ -23,6 +23,7 @@ output:
 
   model_path: ${output.dir}/lightgbm_model.txt
   submission_path: ${output.dir}/submission.csv
+  auroc_path: ${output.dir}/val_auroc.json
 
 best_model:
   json_path: ${output.main_dir}/best_model.json
