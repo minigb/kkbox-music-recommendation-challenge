@@ -39,6 +39,6 @@ feature_engineering:
   genre_id: True
   register_duration: False
   
-  max_composers: 10
-  max_lyricist: 10
-  max_genre_ids: 8
+  const_max_composers: 10
+  const_max_lyricist: 10
+  const_max_genre_ids: 8
