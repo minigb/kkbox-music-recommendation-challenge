@@ -51,8 +51,8 @@ def wandb_log_data(config, aliases=['latest']):
     wandb.log_artifact(model_artifact, aliases=aliases)
 
     # config details
-    wandb.config.update(OmegaConf.to_container(config, resolve=True))   
-    
+    wandb.config.update(OmegaConf.to_container(config, resolve=True))
+
 @hydra.main(config_path=".", config_name="config", version_base=None)
 def main(config):
     PREFIX = 'run_'

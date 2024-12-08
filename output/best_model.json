@@ -1,4 +1,4 @@
 {
-    "output_dir": "output/composer,genre_id_2024-12-08_02-41-13",
-    "val_auroc": 0.7445945444533606
+    "output_dir": "output/composer_2024-12-08_15-53-05",
+    "val_auroc": 0.76780451484651
 }

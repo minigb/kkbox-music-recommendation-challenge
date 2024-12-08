@@ -31,6 +31,7 @@ def predict_fn(model, data, id_column_name):
     return predictions_df
 
 def run_inference(config):
+    print("Running inference...")
     # Load data and model
     encoder = load_pkl(config.output.encoder_path)
     categorical_features = load_pkl(config.output.cat_features_path)
