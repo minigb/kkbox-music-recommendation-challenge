@@ -28,20 +28,19 @@ def save_auroc(auroc, auroc_path):
     save_json({'val_auroc': auroc}, auroc_path)
 
 def train(config):
+    print('Training ...')
     # Step 1: Preprocessing
-    print('Step 1: Preprocessing')
     processed_data, encoder, categorical_features = encode_categorical_features(config)
     # save_processed_data(processed_data, config.output.processed_data_path)
-
-    # Save the encoder and categorical_features locally
     save_pkl(encoder, config.output.encoder_path)
     save_pkl(categorical_features, config.output.cat_features_path)
 
     # Step 2: Model Training
-    print('Step 2: Model Training')
     data = processed_data
-    model, val_auroc = train_model(data, target_column='target', categorical_features=categorical_features)
+    model, val_auroc = train_model(data, 'target', categorical_features, config.model_train)
     model.save_model(config.output.model_path)
+
+    # Step 3: Save the validation AUROC score
     save_auroc(val_auroc, config.output.auroc_path)
     save_best_model(val_auroc, config)
 

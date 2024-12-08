@@ -4,7 +4,7 @@ import lightgbm as lgb
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
 
-def train_model(data, target_column, categorical_features=None, kwargs=None):
+def train_model(data, target_column, categorical_features, model_config):
     """
     Train a LightGBM model.
     """
@@ -25,22 +25,19 @@ def train_model(data, target_column, categorical_features=None, kwargs=None):
         'boosting_type': 'gbdt',
         'objective': 'binary',
         'metric': 'binary_logloss',
-        'num_leaves': 31,
-        'learning_rate': 0.05,
-        'feature_fraction': 0.9,
         'verbose': -1,
         'seed': 42,
     }
-    params.update(kwargs or {})
+    params.update(**model_config.params)
 
     # Define early stopping callback
-    callbacks = [lgb.early_stopping(stopping_rounds=10)]
+    callbacks = [lgb.early_stopping(stopping_rounds=model_config.early_stopping_rounds)]
 
     # Train the model
     model = lgb.train(
         params,
         train_data,
-        num_boost_round=100,
+        num_boost_round=model_config.num_boost_round,
         valid_sets=[train_data, valid_data],
         callbacks=callbacks
     )
