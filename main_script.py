@@ -6,9 +6,8 @@ import hydra
 import wandb
 from tqdm import tqdm
 
-from modules.preprocessing import preprocess_data, encode_categorical_features, save_processed_data
-from modules.train_model import train_model, save_model
-from modules.predict import load_model, predict as predict_fn, save_predictions
+from modules.preprocessing import encode_categorical_features
+from modules.train_model import train_model
 from utils import *
 
 def save_best_model(auroc, config):
@@ -42,37 +41,15 @@ def train(config):
     print('Step 2: Model Training')
     data = processed_data
     model, val_auroc = train_model(data, target_column='target', categorical_features=categorical_features)
-    save_model(model, config.output.model_path)
+    model.save_model(config.output.model_path)
     save_auroc(val_auroc, config.output.auroc_path)
     save_best_model(val_auroc, config)
-
-def run_inference(config):
-    # Load data and model
-    encoder = load_pkl(config.output.encoder_path)
-    categorical_features = load_pkl(config.output.cat_features_path)
-    model = load_model(config.output.model_path)
-
-    # Encode categorical features using the saved OrdinalEncoder
-    test_data = preprocess_data(config, is_train=False)
-    test_data[categorical_features] = encoder.transform(test_data[categorical_features].astype(str))
-
-    # Make predictions
-    # Ensure that 'id' column exists in your test_df
-    predictions_df = predict_fn(model, test_data, id_column_name='id')
-
-    # Save predictions locally
-    save_predictions(predictions_df, config.output.submission_path)
 
 def wandb_log_data(config, aliases=['latest']):
     # model
     model_artifact = wandb.Artifact('trained_model', type='model')
     model_artifact.add_file(config.output.model_path)
     wandb.log_artifact(model_artifact, aliases=aliases)
-
-    # # predictions
-    # inference_artifact = wandb.Artifact('inference_results', type='inference')
-    # inference_artifact.add_file(config.output.submission_path)
-    # wandb.log_artifact(inference_artifact, aliases=['latest'])
 
     # config details
     wandb.config.update(OmegaConf.to_container(config, resolve=True))   
@@ -94,8 +71,8 @@ def main(config):
         # Update the wandb run name to include the enabled features for this combination
         enabled_features = [key[len(PREFIX):] for key, value in current_config.feature_engineering.items() if key in feature_keys and value]
         features_string = ','.join(enabled_features) if len(enabled_features) > 0 else 'baseline'
-        if any(features_string in existing_out_dirs.name for existing_out_dirs in Path(current_config.output.main_dir).iterdir()):
-            continue
+        # if any(features_string in existing_out_dirs.name for existing_out_dirs in Path(current_config.output.main_dir).iterdir()):
+        #     continue
 
         current_config.wandb.name = f"{features_string}_{current_config.wandb.name}"
 
@@ -104,7 +81,6 @@ def main(config):
         
         # Call your pipeline functions
         train(current_config)
-        run_inference(current_config)
         wandb_log_data(current_config)
 
         # Finish wandb run

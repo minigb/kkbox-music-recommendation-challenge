@@ -2,29 +2,12 @@
 
 import lightgbm as lgb
 import pandas as pd
-from pathlib import Path
 
 from modules.preprocessing import preprocess_data
+from utils import *
 
-def load_model(model_path):
-    """
-    Load the trained model from a file.
-    """
-    model = lgb.Booster(model_file=model_path)
-    return model
 
-# def preprocess_test_data(config, encoder, categorical_features):
-#     """
-#     Preprocess the test data using the same steps as training data.
-#     """
-#     test_df = preprocess_data(config, is_train=False)
-
-#     # Encode categorical features using the saved OrdinalEncoder
-#     test_df[categorical_features] = encoder.transform(test_df[categorical_features].astype(str))
-
-#     return test_df
-
-def predict(model, data, id_column_name):
+def predict_fn(model, data, id_column_name):
     """
     Generate predictions using the trained model and include test set IDs.
     """
@@ -47,10 +30,19 @@ def predict(model, data, id_column_name):
 
     return predictions_df
 
-# TODO(minigb): Saver functions are redundant. Clean these.
-def save_predictions(predictions_df, output_path):
-    """
-    Save the predictions to a CSV file.
-    """
-    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-    predictions_df.to_csv(output_path, index=False)
+def run_inference(config):
+    # Load data and model
+    encoder = load_pkl(config.output.encoder_path)
+    categorical_features = load_pkl(config.output.cat_features_path)
+    model = lgb.Booster(model_file=config.output.model_path)
+
+    # Encode categorical features using the saved OrdinalEncoder
+    test_data = preprocess_data(config, is_train=False)
+    test_data[categorical_features] = encoder.transform(test_data[categorical_features].astype(str))
+
+    # Make predictions
+    # Ensure that 'id' column exists in your test_df
+    predictions_df = predict_fn(model, test_data, id_column_name='id')
+
+    # Save predictions locally
+    save_csv(predictions_df, config.output.submission_path)

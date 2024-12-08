@@ -4,7 +4,7 @@ import lightgbm as lgb
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
 
-def train_model(data, target_column, categorical_features=None):
+def train_model(data, target_column, categorical_features=None, kwargs=None):
     """
     Train a LightGBM model.
     """
@@ -31,6 +31,7 @@ def train_model(data, target_column, categorical_features=None):
         'verbose': -1,
         'seed': 42,
     }
+    params.update(kwargs or {})
 
     # Define early stopping callback
     callbacks = [lgb.early_stopping(stopping_rounds=10)]
@@ -52,9 +53,3 @@ def train_model(data, target_column, categorical_features=None):
     auroc = roc_auc_score(y_valid, y_pred)
 
     return model, auroc
-
-def save_model(model, model_path):
-    """
-    Save the trained model to a file.
-    """
-    model.save_model(model_path)
