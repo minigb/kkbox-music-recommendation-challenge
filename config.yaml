@@ -34,11 +34,11 @@ best_model:
   json_path: ${output.main_dir}/best_model.json
 
 feature_engineering:
-  composer: False
-  lyricist: True
-  genre_id: False
-  register_duration: False
+  run_composer: False
+  run_lyricist: True
+  run_genre_id: False
+  run_register_duration: False
   
-  const_max_composers: 10
-  const_max_lyricist: 10
-  const_max_genre_ids: 8
+  max_composers: 10
+  max_lyricist: 10
+  max_genre_ids: 8

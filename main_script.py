@@ -79,7 +79,8 @@ def wandb_log_data(config, aliases=['latest']):
     
 @hydra.main(config_path=".", config_name="config", version_base=None)
 def main(config):
-    feature_keys = [key for key in config.feature_engineering if not key.startswith('const')]
+    PREFIX = 'run_'
+    feature_keys = [key for key in config.feature_engineering if key.startswith(PREFIX)]
     feature_combinations = list(itertools.product([True, False], repeat=len(feature_keys)))
 
     for combination in tqdm(feature_combinations):
@@ -91,7 +92,7 @@ def main(config):
             current_config.feature_engineering[key] = value
 
         # Update the wandb run name to include the enabled features for this combination
-        enabled_features = [key for key, value in current_config.feature_engineering.items() if key in feature_keys and value]
+        enabled_features = [key[len(PREFIX):] for key, value in current_config.feature_engineering.items() if key in feature_keys and value]
         features_string = ','.join(enabled_features) if len(enabled_features) > 0 else 'baseline'
         if any(features_string in existing_out_dirs.name for existing_out_dirs in Path(current_config.output.main_dir).iterdir()):
             continue
