@@ -42,11 +42,12 @@ def train_model(data, target_column, categorical_features, model_config):
         callbacks=callbacks
     )
 
+    # Train set auroc
+    y_train_pred = model.predict(X_train, num_iteration=model.best_iteration)
+    train_auroc = roc_auc_score(y_train, y_train_pred)
+
     # Validate the model
-    # Make predictions
     y_pred = model.predict(X_valid, num_iteration=model.best_iteration)
+    val_auroc = roc_auc_score(y_valid, y_pred)
 
-    # Evaluate the model using AUROC
-    auroc = roc_auc_score(y_valid, y_pred)
-
-    return model, auroc
+    return model, {'train_auroc': train_auroc, 'val_auroc': val_auroc}

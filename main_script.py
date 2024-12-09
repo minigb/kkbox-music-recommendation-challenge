@@ -16,16 +16,13 @@ def save_best_model(auroc, config):
         best_model = load_json(config.best_model.json_path)
         best_auroc = best_model['val_auroc']
 
-    if auroc > best_auroc:
+    if auroc['val_auroc'] > best_auroc:
         best_model = {
             'output_dir': config.output.dir,
-            'val_auroc': auroc
         }
+        best_model.update(auroc)
         Path(config.best_model.json_path).parent.mkdir(parents=True, exist_ok=True)
         save_json(best_model, config.best_model.json_path)
-
-def save_auroc(auroc, auroc_path):
-    save_json({'val_auroc': auroc}, auroc_path)
 
 def train(config):
     print('Training ...')
@@ -37,12 +34,12 @@ def train(config):
 
     # Step 2: Model Training
     data = processed_data
-    model, val_auroc = train_model(data, 'target', categorical_features, config.model_train)
+    model, aurocs = train_model(data, 'target', categorical_features, config.model_train)
     model.save_model(config.output.model_path)
 
     # Step 3: Save the validation AUROC score
-    save_auroc(val_auroc, config.output.auroc_path)
-    save_best_model(val_auroc, config)
+    save_json(aurocs, config.output.auroc_path)
+    save_best_model(aurocs, config)
 
 def wandb_log_data(config, aliases=['latest']):
     # model

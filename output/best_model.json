@@ -1,4 +1,5 @@
 {
-    "output_dir": "output/composer_2024-12-08_15-53-05",
-    "val_auroc": 0.76780451484651
+    "output_dir": "output/lyricist_2024-12-09_17-14-04",
+    "train_auroc": 0.7987841022593611,
+    "val_auroc": 0.7797995212294383
 }
