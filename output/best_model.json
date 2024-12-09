@@ -1,5 +1,5 @@
 {
-    "output_dir": "output/lyricist_2024-12-09_17-14-04",
-    "train_auroc": 0.7987841022593611,
-    "val_auroc": 0.7797995212294383
+    "output_dir": "output/composer,lyricist,genre_id,register_duration_2024-12-09_21-26-36",
+    "train_auroc": 0.8536985675378491,
+    "val_auroc": 0.8148501481775489
 }
