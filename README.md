@@ -41,3 +41,13 @@
    output/result_analysis.ipynb
    ```
 2. This will generate analysis files in JSON and CSV formats.
+
+---
+
+# Kaggle Submission
+
+1. To submit your results to Kaggle, run the following command:  
+   ```bash
+   python submit_best_model.py
+   ```  
+   This script automatically performs inference using the best model specified in `output/best_model.json` and submits the results to Kaggle.
