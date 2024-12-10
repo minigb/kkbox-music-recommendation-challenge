@@ -6,12 +6,12 @@ class FeatureEngineering:
         self.config = config
 
     def _check_with_default_as_false(self, key):
-        if key in self.config.feature_engineering.keys() and not (self.config.feature_engineering).to_dict()[key]:
+        if key in self.config.feature_engineering.keys() and not (self.config.feature_engineering)[key]:
             return False
         return True
     
     def _check_with_default_as_true(self, key):
-        if key in self.config.feature_engineering.keys() and (self.config.feature_engineering).to_dict()[key]:
+        if key in self.config.feature_engineering.keys() and (self.config.feature_engineering)[key]:
             return True
         return False
 
