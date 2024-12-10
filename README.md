@@ -22,14 +22,14 @@
 
 1. Run the main script using:  
    ```bash
-   python main_script.py
+   python scripts/main_script.py
    ```
 
 2. **Try Different Settings**  
    - Modify configurations in the `config.yaml` file to adjust feature engineering and model settings.  
    - To run all possible feature engineering combinations, add the `--run_all` option:  
      ```bash
-     python main_script.py --run_all
+     python scripts/main_script.py --run_all
      ```
 
 ---
@@ -48,6 +48,6 @@
 
 1. To submit your results to Kaggle, run the following command:  
    ```bash
-   python submit_best_model.py
+   python scripts/submit_best_model.py
    ```  
    This script automatically performs inference using the best model specified in `output/best_model.json` and submits the results to Kaggle.

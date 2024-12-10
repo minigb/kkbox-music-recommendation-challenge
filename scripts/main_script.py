@@ -103,9 +103,9 @@ def run_all(config):
 
 @hydra.main(config_path="../", config_name="config", version_base=None)
 def main(config):
-    argparser = ArgumentParser()
-    argparser.add_argument('--run_all', action='store_true')
-    args = argparser.parse_args()
+    parser = ArgumentParser()
+    parser.add_argument('--run_all', action='store_true')
+    args, _ = parser.parse_known_args()
 
     if args.run_all:
         run_all(config)
