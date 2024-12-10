@@ -5,6 +5,11 @@ class FeatureEngineering:
         self.data = data # user-item data
         self.config = config
 
+    def _do_sort(self):
+        if 'do_sort' in self.config.feature_engineering.keys() and not self.config.feature_engineering.do_sort:
+            return False
+        return True
+
     def run(self):
         for method_name in dir(self):
             if method_name.startswith("run_"):
@@ -17,9 +22,9 @@ class FeatureEngineering:
         if not self.config.feature_engineering.run_composer:
             return
         column_name = 'composer'
-        if self.config.feature_engineering.do_sort:
+        if self._do_sort():
             composers_list = [sorted(str(composers).split('| ')) for composers in self.data[column_name].tolist()]
-        else:
+        else: # default is to sort
             composers_list = [str(composers).split('| ') for composers in self.data[column_name].tolist()]
         # max_num = max([len(composers) for composers in composers_list])
         max_num = self.config.feature_engineering.max_composers
@@ -31,7 +36,7 @@ class FeatureEngineering:
         if not self.config.feature_engineering.run_lyricist:
             return
         column_name = 'lyricist'
-        if self.config.feature_engineering.do_sort:
+        if self._do_sort():
             composers_list = [sorted(str(composers).split('| ')) for composers in self.data[column_name].tolist()]
         else:
             composers_list = [str(composers).split('| ') for composers in self.data[column_name].tolist()]
@@ -45,7 +50,7 @@ class FeatureEngineering:
         if not self.config.feature_engineering.run_genre_id:
             return
         column_name = 'genre_ids'
-        if self.config.feature_engineering.do_sort:
+        if self._do_sort():
             genre_ids = [sorted(str(elem).split('|')) for elem in self.data[column_name].tolist()]
         else:
             genre_ids = [str(elem).split('|') for elem in self.data[column_name].tolist()]
