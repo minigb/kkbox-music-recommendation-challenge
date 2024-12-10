@@ -20,7 +20,7 @@ dataset:
   songs_extra_original_path: ${dataset.dir}/song_extra_info${dataset.small_suffix}.csv
 
 output:
-  main_dir: output
+  main_dir: output_lgbm
   dir: ${output.main_dir}/${wandb.name}
   encoder_path: ${output.dir}/ordinal_encoder.pkl
   cat_features_path: ${output.dir}/categorical_features.pkl

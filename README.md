@@ -1,4 +1,5 @@
-# Environment Setup
+# LightGBM Method
+## Environment Setup
 
 1. **Install Dependencies**  
    Run the following command in a virtual environment to install the required packages:  
@@ -11,14 +12,14 @@
 
 ---
 
-# Dataset Setup
+## Dataset Setup
 
 1. Download the dataset from the [KKBox Music Recommendation Challenge](https://www.kaggle.com/competitions/kkbox-music-recommendation-challenge/data).  
 2. Place the downloaded dataset in the `dataset` directory.
 
 ---
 
-# Running the Main Script
+## Running the Main Script
 
 1. Run the main script using:  
    ```bash
@@ -34,20 +35,23 @@
 
 ---
 
-# Result Analysis
+## Result Analysis
 
 1. Analyze the results by running the following Jupyter notebook:  
    ```bash
-   output/result_analysis.ipynb
+   output_lgbm/result_analysis.ipynb
    ```
 2. This will generate analysis files in JSON and CSV formats.
 
 ---
 
-# Kaggle Submission
+## Kaggle Submission
 
 1. To submit your results to Kaggle, run the following command:  
    ```bash
    python scripts/submit_best_model.py
    ```  
-   This script automatically performs inference using the best model specified in `output/best_model.json` and submits the results to Kaggle.
+   This script automatically performs inference using the best model specified in `output_lgbm/best_model.json` and submits the results to Kaggle.
+
+---
+# Random Forest
