@@ -1,6 +1,8 @@
 dataset
+
 output/*
 !output/best_model.json
+!output/result_analysis.ipynb
 
 wandb
 
