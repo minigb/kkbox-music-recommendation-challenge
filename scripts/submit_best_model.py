@@ -1,13 +1,16 @@
 import os
+import sys
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(project_root)
+
 import hydra
-import wandb
 from pathlib import Path
 
 from modules.predict import run_inference
 from utils import load_json, fetch_config_from_wandb
 
 
-@hydra.main(config_path=".", config_name="config", version_base=None)
+@hydra.main(config_path="../", config_name="config", version_base=None)
 def main(config):
     best_model_json = load_json(config.best_model.json_path)
     config.wandb.name = best_model_json['output_dir'].split('/')[-1]

@@ -1,3 +1,8 @@
+import os
+import sys
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(project_root)
+
 import itertools
 from copy import deepcopy
 from pathlib import Path
@@ -96,7 +101,7 @@ def run_all(config):
         # Run the pipeline
         run(current_config)
 
-@hydra.main(config_path=".", config_name="config", version_base=None)
+@hydra.main(config_path="../", config_name="config", version_base=None)
 def main(config):
     argparser = ArgumentParser()
     argparser.add_argument('--run_all', action='store_true')
