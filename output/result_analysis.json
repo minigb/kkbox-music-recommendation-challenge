@@ -1,0 +1,788 @@
+{
+    "{'early_stopping_rounds': 10, 'num_boost_round': 100, 'max_depth': 15}": [
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.76780451484651
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.7674852019373092
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.7673271997836172
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.7672469409542247
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.767158496291957
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.7671257771560276
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.7671172202588744
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.766963210969593
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.7667943219118006
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.7663798286678892
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.7660066815659667
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.7655984650099713
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.7655170837958893
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.7652753935482604
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.7649701357516873
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.7648427356913591
+        }
+    ],
+    "{'early_stopping_rounds': 10, 'num_boost_round': 200, 'max_depth': 15}": [
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.7797995212294383
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.7796817194560608
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.7795791161940218
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.7792302788562354
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.7790971883618054
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.7789249869841117
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.7787440364281644
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.7784793278136135
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.7784132395788803
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.7783996183364832
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.7783639420353511
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.7780002531008706
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.777819057441666
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.7777629251061742
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.7775202066203112
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.7770151103812601
+        }
+    ],
+    "{'early_stopping_rounds': 10, 'num_boost_round': 200, 'max_depth': 31}": [
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.8025407847612689
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.8023308774860639
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.8020562439884641
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.8020375662724686
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.8019362917474283
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.8019151166702614
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.8018948424793552
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.8018606805833324
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.8016552653265259
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.8016195163210865
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.801521054696448
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.8014935200135795
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.8014235207159682
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.8012552769447345
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.8012457003645248
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.8011866458149268
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.801107661770344
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.8010761978549515
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.8010302983319306
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.8009761431151841
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.8009212667260233
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.8007425324617019
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.8006336697433731
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.8006108001733282
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.8005787196916738
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.8003696858539509
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.8000920675622992
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.7999836582104876
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.7997219980136073
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.7994152823034731
+        }
+    ],
+    "{'early_stopping_rounds': 10, 'num_boost_round': 200, 'max_depth': 63}": [
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.8160626267222275
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.8148501481775489
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.8148411593679702
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.8146162367744892
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.8142220483104688
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.8138530747036924
+        },
+        {
+            "run_artist_name": true,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.8138089568321737
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.8137893908651567
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.8134950022238144
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.8134945924958679
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.8134598241864246
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.8134029676963332
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.8133115590941772
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.8132519259832584
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.8130613249466127
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.8130427363332664
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.8122330681781129
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.811975923421634
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.8081174979003445
+        }
+    ],
+    "{'early_stopping_rounds': 20, 'num_boost_round': 200, 'max_depth': 15}": [
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.7797995212294383
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.7796817194560608
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.7795791161940218
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.7792302788562354
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.7790971883618054
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.7789249869841117
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.7787440364281644
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.7784793278136135
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.7784132395788803
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.7783996183364832
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.7783639420353511
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": true,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.7780002531008706
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": false,
+            "val_auroc": 0.777819057441666
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": true,
+            "run_lyricist": true,
+            "run_register_duration": false,
+            "val_auroc": 0.7777629251061742
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": true,
+            "run_genre_id": false,
+            "run_lyricist": true,
+            "run_register_duration": true,
+            "val_auroc": 0.7775202066203112
+        },
+        {
+            "run_artist_name": false,
+            "run_composer": false,
+            "run_genre_id": false,
+            "run_lyricist": false,
+            "run_register_duration": true,
+            "val_auroc": 0.7770151103812601
+        }
+    ]
+}

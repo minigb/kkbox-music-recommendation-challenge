@@ -3,6 +3,8 @@ dataset
 output/*
 !output/best_model.json
 !output/result_analysis.ipynb
+!output/result_analysis.csv
+!output/result_analysis.json
 
 wandb
 
