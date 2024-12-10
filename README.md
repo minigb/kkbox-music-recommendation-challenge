@@ -71,4 +71,4 @@ RS_Project_randomforest.ipynb
    - `collaborative_filtering_NN_3.py`  
    - `latent_factor_model_2.py`  
 
-2. When running these files, ensure the KKBox dataset-related CSV files are placed directly under the `dataset` directory.
+2. When running these files, ensure the KKBox dataset-related CSV files are placed directly in the `dataset` directory (this setup differs from the LightGBM approach).
