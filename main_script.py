@@ -24,6 +24,10 @@ def save_best_model(auroc, config):
         Path(config.best_model.json_path).parent.mkdir(parents=True, exist_ok=True)
         save_json(best_model, config.best_model.json_path)
 
+def save_config(config, config_path):
+    Path(config_path).parent.mkdir(parents=True, exist_ok=True)
+    OmegaConf.save(config, config_path)
+
 def train(config):
     print('Training ...')
     # Step 1: Preprocessing
@@ -72,12 +76,33 @@ def main(config):
 
         current_config.wandb.name = f"{features_string}_{current_config.wandb.name}"
 
+        # # skip if it is already ran
+        # config_dict = OmegaConf.to_container(current_config, resolve=True)
+        # keys = ['feature_engineering', 'model_train']
+        # for existing_out_dirs in Path(current_config.output.main_dir).iterdir():
+        #     if not existing_out_dirs.is_dir():
+        #         continue
+        #     config_path = existing_out_dirs / 'config.yaml'
+        #     saved_config = load_conf(config_path)
+        #     saved_config_dict = OmegaConf.to_container(saved_config, resolve=True)
+        #     is_same = True
+        #     for key in keys:
+        #         if saved_config_dict.get(key) is None:
+        #             is_same = False
+        #             break
+        #         if config_dict[key] != saved_config_dict[key]:
+        #             is_same = False
+        #             break
+        #     if is_same:
+        #         continue
+            
         # Initialize wandb and run the pipeline
         wandb.init(project=current_config.wandb.project, entity=current_config.wandb.entity, name=current_config.wandb.name)
         
         # Call your pipeline functions
         train(current_config)
         wandb_log_data(current_config)
+        save_config(current_config, Path(current_config.output.main_dir) / 'config.yaml')
 
         # Finish wandb run
         wandb.finish()
