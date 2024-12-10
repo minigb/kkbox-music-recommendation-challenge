@@ -1,5 +1,17 @@
 dataset
 
-venv
+output/*
+!output/best_model.json
+!output/result_analysis.ipynb
+!output/result_analysis.csv
+!output/result_analysis.json
+
+wandb
+
+.hydra
+venv*
+
+*.log
 
 *.DS_Store
+__pycache__/

@@ -1,0 +1,5 @@
+{
+    "output_dir": "output/composer,lyricist,genre_id,register_duration_2024-12-10_23-14-36",
+    "train_auroc": 0.8655471576343275,
+    "val_auroc": 0.8160626267222275
+}

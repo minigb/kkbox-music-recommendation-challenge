@@ -1,0 +1,61 @@
+hydra:
+  run:
+    dir: .
+
+wandb:
+  project: 'music-recommendation-system'
+  entity: 'minigb'
+  name: ${now:%Y-%m-%d_%H-%M-%S}
+
+dataset:
+  dir: 'dataset/kkbox'
+  # small_suffix: '_small'
+  small_suffix: ''
+  members_path: ${dataset.dir}/members${dataset.small_suffix}.csv
+  songs_path: ${dataset.dir}/../songs_merged${dataset.small_suffix}.csv
+  train_path: ${dataset.dir}/train.csv
+  test_path: ${dataset.dir}/test${dataset.small_suffix}.csv
+
+  songs_original_path: ${dataset.dir}/songs${dataset.small_suffix}.csv
+  songs_extra_original_path: ${dataset.dir}/song_extra_info${dataset.small_suffix}.csv
+
+output:
+  main_dir: output
+  dir: ${output.main_dir}/${wandb.name}
+  encoder_path: ${output.dir}/ordinal_encoder.pkl
+  cat_features_path: ${output.dir}/categorical_features.pkl
+  processed_data_path: ${output.dir}/processed_data.csv
+
+  model_path: ${output.dir}/lightgbm_model.txt
+  submission_path: ${output.dir}/submission.csv
+  auroc_path: ${output.dir}/val_auroc.json
+
+best_model:
+  json_path: ${output.main_dir}/best_model.json
+
+feature_engineering:
+  run_artist_name: False
+  run_composer: True
+  run_lyricist: True
+  run_genre_id: True
+  run_register_duration: True
+  
+  max_artists: 10
+  max_composers: 10
+  max_lyricist: 10
+  max_genre_ids: 8
+
+  do_sort: True
+
+model_train:
+  params:
+    learning_rate: 0.05
+    max_depth: 63
+    num_leaves: 1024
+    feature_fraction: 0.8
+    bagging_fraction: 0.8
+    bagging_freq: 5
+    min_data_in_leaf: 20
+    max_bin: 255
+  num_boost_round: 200
+  early_stopping_rounds: 10
