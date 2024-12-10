@@ -56,6 +56,13 @@ def wandb_log_data(config, aliases=['latest']):
     wandb.config.update(OmegaConf.to_container(config, resolve=True))
 
 def run(config):
+    # TODO(minigb): Remove duplicated code here
+    PREFIX = 'run_'
+    feature_keys = [key for key in config.feature_engineering if key.startswith(PREFIX)]
+    enabled_features = [key[len(PREFIX):] for key, value in config.feature_engineering.items() if key in feature_keys and value]
+    features_string = ','.join(enabled_features) if len(enabled_features) > 0 else 'baseline'
+    config.wandb.name = f"{features_string}_{config.wandb.name}"
+
     # Initialize wandb and run the pipeline
     wandb.init(project=config.wandb.project, entity=config.wandb.entity, name=config.wandb.name)
     

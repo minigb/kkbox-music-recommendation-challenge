@@ -23,6 +23,20 @@ class FeatureEngineering:
                     method()
         return self.data
     
+    def run_refine_artist_name(self):
+        if not self._check_with_default_as_false('run_artist'):
+            return
+        column_name = 'artist_name'
+        if self._check_with_default_as_true('do_sort'):
+            composers_list = [sorted(str(composers).split('| ')) for composers in self.data[column_name].tolist()]
+        else: # default is to sort
+            composers_list = [str(composers).split('| ') for composers in self.data[column_name].tolist()]
+        # max_num = max([len(composers) for composers in composers_list])
+        max_num = self.config.feature_engineering.max_artists
+        for i in range(max_num):
+            self.data[f'{column_name}_{i}'] = [composers[i] if len(composers) > i else None for composers in composers_list]
+        self.data.drop(columns=[column_name], inplace=True)
+    
     def run_refine_composer(self):
         if not self._check_with_default_as_false('run_composer'):
             return

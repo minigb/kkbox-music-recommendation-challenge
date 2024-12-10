@@ -40,6 +40,7 @@ feature_engineering:
   run_genre_id: True
   run_register_duration: True
   
+  max_artists: 10
   max_composers: 10
   max_lyricist: 10
   max_genre_ids: 8
