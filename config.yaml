@@ -43,6 +43,8 @@ feature_engineering:
   max_lyricist: 10
   max_genre_ids: 8
 
+  do_sort: True
+
 model_train:
   params:
     learning_rate: 0.1

@@ -17,7 +17,10 @@ class FeatureEngineering:
         if not self.config.feature_engineering.run_composer:
             return
         column_name = 'composer'
-        composers_list = [sorted(str(composers).split('| ')) for composers in self.data[column_name].tolist()]
+        if self.config.feature_engineering.do_sort:
+            composers_list = [sorted(str(composers).split('| ')) for composers in self.data[column_name].tolist()]
+        else:
+            composers_list = [str(composers).split('| ') for composers in self.data[column_name].tolist()]
         # max_num = max([len(composers) for composers in composers_list])
         max_num = self.config.feature_engineering.max_composers
         for i in range(max_num):
@@ -28,7 +31,10 @@ class FeatureEngineering:
         if not self.config.feature_engineering.run_lyricist:
             return
         column_name = 'lyricist'
-        composers_list = [sorted(str(composers).split('| ')) for composers in self.data[column_name].tolist()]
+        if self.config.feature_engineering.do_sort:
+            composers_list = [sorted(str(composers).split('| ')) for composers in self.data[column_name].tolist()]
+        else:
+            composers_list = [str(composers).split('| ') for composers in self.data[column_name].tolist()]
         # max_num = max([len(composers) for composers in composers_list])
         max_num = self.config.feature_engineering.max_lyricist
         for i in range(max_num):
@@ -39,7 +45,10 @@ class FeatureEngineering:
         if not self.config.feature_engineering.run_genre_id:
             return
         column_name = 'genre_ids'
-        genre_ids = [sorted(str(elem).split('|')) for elem in self.data[column_name].tolist()]
+        if self.config.feature_engineering.do_sort:
+            genre_ids = [sorted(str(elem).split('|')) for elem in self.data[column_name].tolist()]
+        else:
+            genre_ids = [str(elem).split('|') for elem in self.data[column_name].tolist()]
         # max_num = max([len(composers) for composers in genre_ids])
         max_num = self.config.feature_engineering.max_genre_ids
         for i in range(max_num):
