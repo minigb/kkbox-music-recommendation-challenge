@@ -1,10 +1,10 @@
 dataset
 
-output/*
-!output/best_model.json
-!output/result_analysis.ipynb
-!output/result_analysis.csv
-!output/result_analysis.json
+output_lgbm/*
+!output_lgbm/best_model.json
+!output_lgbm/result_analysis.ipynb
+!output_lgbm/result_analysis.csv
+!output_lgbm/result_analysis.json
 
 wandb
 
