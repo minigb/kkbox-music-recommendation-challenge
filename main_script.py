@@ -69,7 +69,7 @@ def run(config):
     # Call your pipeline functions
     train(config)
     wandb_log_data(config)
-    save_config(config, Path(config.output.main_dir) / 'config.yaml')
+    save_config(config, Path(config.output.dir) / 'config.yaml')
 
     # Finish wandb run
     wandb.finish()

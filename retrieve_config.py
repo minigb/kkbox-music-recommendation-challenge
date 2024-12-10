@@ -13,9 +13,6 @@ def retrieve_config(config):
 
         wandb_runname = dir_name.name
         config.wandb.name = wandb_runname
-        # config_path = dir_name / '{wandb_runname}.yaml'
-        # if config_path.exists():
-        #     config_path.unlink()
 
         try:
             config_fetched = fetch_config_from_wandb(config.wandb)
@@ -50,6 +47,6 @@ def refine_dirs(current_config):
 
 if __name__ == "__main__":
     config = OmegaConf.load('config.yaml')
-    # retrieve_config(config)
+    retrieve_config(config)
 
     refine_dirs(config)
