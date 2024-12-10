@@ -5,6 +5,7 @@ from omegaconf import OmegaConf
 import hydra
 import wandb
 from tqdm import tqdm
+from argparse import ArgumentParser
 
 from modules.preprocessing import encode_categorical_features
 from modules.train_model import train_model
@@ -54,8 +55,19 @@ def wandb_log_data(config, aliases=['latest']):
     # config details
     wandb.config.update(OmegaConf.to_container(config, resolve=True))
 
-@hydra.main(config_path=".", config_name="config", version_base=None)
-def main(config):
+def run(config):
+    # Initialize wandb and run the pipeline
+    wandb.init(project=config.wandb.project, entity=config.wandb.entity, name=config.wandb.name)
+    
+    # Call your pipeline functions
+    train(config)
+    wandb_log_data(config)
+    save_config(config, Path(config.output.main_dir) / 'config.yaml')
+
+    # Finish wandb run
+    wandb.finish()
+
+def run_all(config):
     PREFIX = 'run_'
     feature_keys = [key for key in config.feature_engineering if key.startswith(PREFIX)]
     feature_combinations = list(itertools.product([True, False], repeat=len(feature_keys)))
@@ -71,42 +83,22 @@ def main(config):
         # Update the wandb run name to include the enabled features for this combination
         enabled_features = [key[len(PREFIX):] for key, value in current_config.feature_engineering.items() if key in feature_keys and value]
         features_string = ','.join(enabled_features) if len(enabled_features) > 0 else 'baseline'
-        # if any(features_string in existing_out_dirs.name for existing_out_dirs in Path(current_config.output.main_dir).iterdir()):
-        #     continue
 
         current_config.wandb.name = f"{features_string}_{current_config.wandb.name}"
 
-        # # skip if it is already ran
-        # config_dict = OmegaConf.to_container(current_config, resolve=True)
-        # keys = ['feature_engineering', 'model_train']
-        # for existing_out_dirs in Path(current_config.output.main_dir).iterdir():
-        #     if not existing_out_dirs.is_dir():
-        #         continue
-        #     config_path = existing_out_dirs / 'config.yaml'
-        #     saved_config = load_conf(config_path)
-        #     saved_config_dict = OmegaConf.to_container(saved_config, resolve=True)
-        #     is_same = True
-        #     for key in keys:
-        #         if saved_config_dict.get(key) is None:
-        #             is_same = False
-        #             break
-        #         if config_dict[key] != saved_config_dict[key]:
-        #             is_same = False
-        #             break
-        #     if is_same:
-        #         continue
-            
-        # Initialize wandb and run the pipeline
-        wandb.init(project=current_config.wandb.project, entity=current_config.wandb.entity, name=current_config.wandb.name)
-        
-        # Call your pipeline functions
-        train(current_config)
-        wandb_log_data(current_config)
-        save_config(current_config, Path(current_config.output.main_dir) / 'config.yaml')
+        # Run the pipeline
+        run(current_config)
 
-        # Finish wandb run
-        wandb.finish()
+@hydra.main(config_path=".", config_name="config", version_base=None)
+def main(config):
+    argparser = ArgumentParser()
+    argparser.add_argument('--run_all', action='store_true')
+    args = argparser.parse_args()
 
+    if args.run_all:
+        run_all(config)
+    else:
+        run(config)
 
 if __name__ == "__main__":
     main()

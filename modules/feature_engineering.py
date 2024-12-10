@@ -5,10 +5,15 @@ class FeatureEngineering:
         self.data = data # user-item data
         self.config = config
 
-    def _do_sort(self):
-        if 'do_sort' in self.config.feature_engineering.keys() and not self.config.feature_engineering.do_sort:
+    def _check_with_default_as_false(self, key):
+        if key in self.config.feature_engineering.keys() and not (self.config.feature_engineering).to_dict()[key]:
             return False
         return True
+    
+    def _check_with_default_as_true(self, key):
+        if key in self.config.feature_engineering.keys() and (self.config.feature_engineering).to_dict()[key]:
+            return True
+        return False
 
     def run(self):
         for method_name in dir(self):
@@ -19,10 +24,10 @@ class FeatureEngineering:
         return self.data
     
     def run_refine_composer(self):
-        if not self.config.feature_engineering.run_composer:
+        if not self._check_with_default_as_false('run_composer'):
             return
         column_name = 'composer'
-        if self._do_sort():
+        if self._check_with_default_as_true('do_sort'):
             composers_list = [sorted(str(composers).split('| ')) for composers in self.data[column_name].tolist()]
         else: # default is to sort
             composers_list = [str(composers).split('| ') for composers in self.data[column_name].tolist()]
@@ -33,10 +38,10 @@ class FeatureEngineering:
         self.data.drop(columns=[column_name], inplace=True)
     
     def run_refine_lyricist(self):
-        if not self.config.feature_engineering.run_lyricist:
+        if not self._check_with_default_as_false('run_lyricist'):
             return
         column_name = 'lyricist'
-        if self._do_sort():
+        if self._check_with_default_as_true('do_sort'):
             composers_list = [sorted(str(composers).split('| ')) for composers in self.data[column_name].tolist()]
         else:
             composers_list = [str(composers).split('| ') for composers in self.data[column_name].tolist()]
@@ -47,10 +52,10 @@ class FeatureEngineering:
         self.data.drop(columns=[column_name], inplace=True)
 
     def run_refine_genre_id(self):
-        if not self.config.feature_engineering.run_genre_id:
+        if not self._check_with_default_as_false('run_genre_id'):
             return
         column_name = 'genre_ids'
-        if self._do_sort():
+        if self._check_with_default_as_true('do_sort'):
             genre_ids = [sorted(str(elem).split('|')) for elem in self.data[column_name].tolist()]
         else:
             genre_ids = [str(elem).split('|') for elem in self.data[column_name].tolist()]
@@ -61,7 +66,7 @@ class FeatureEngineering:
         self.data.drop(columns=[column_name], inplace=True)
 
     def run_get_member_register_duration(self):
-        if not self.config.feature_engineering.run_register_duration:
+        if not self._check_with_default_as_false('run_register_duration'):
             return
         column_name = 'member_duration'
         if column_name in self.data.columns:
